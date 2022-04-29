@@ -16,7 +16,7 @@ namespace HakimsLivs.Models
         public int? Volume { get; set; }
         // TODO: Denna ska ändras när modellen för kategori har skapats!
         [Required(ErrorMessage = "Välj en kategori.")]
-        public string Category { get; set; } = string.Empty;
+        public Category Category { get; set; }
         [Required]
         public int Inventory { get; set; } = 0;
         public string Image { get; set; }
