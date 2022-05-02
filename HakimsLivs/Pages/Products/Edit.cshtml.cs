@@ -30,7 +30,12 @@ namespace HakimsLivs.Pages.Products
                 return NotFound();
             }
 
-            Product = await _context.Products.FirstOrDefaultAsync(m => m.ID == id);
+            Product = await _context.Products
+                .Include(p => p.Category)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(m => m.ID == id);
+
+
 
             if (Product == null)
             {
@@ -41,32 +46,25 @@ namespace HakimsLivs.Pages.Products
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int id)
         {
-            if (!ModelState.IsValid)
+            var productToupdate = await _context.Products.FindAsync(id);
+
+            if (productToupdate == null)
             {
-                return Page();
+                return NotFound();
             }
 
-            _context.Attach(Product).State = EntityState.Modified;
+            productToupdate.Name = Product.Name;
+            productToupdate.Price = Product.Price;
+            productToupdate.Weight = Product.Weight;
+            productToupdate.Volume = Product.Volume;
+            productToupdate.Inventory = Product.Inventory;
+            productToupdate.Image = Product.Image;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ProductExists(Product.ID))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Details", productToupdate);
         }
 
         private bool ProductExists(int id)
