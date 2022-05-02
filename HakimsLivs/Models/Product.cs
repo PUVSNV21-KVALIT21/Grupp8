@@ -14,11 +14,10 @@ namespace HakimsLivs.Models
         public decimal Price { get; set; }
         public int? Weight { get; set; }
         public int? Volume { get; set; }
-        // TODO: Denna ska ändras när modellen för kategori har skapats!
         [Required(ErrorMessage = "Välj en kategori.")]
         public Category Category { get; set; }
         [Required]
         public int Inventory { get; set; } = 0;
-        public string Image { get; set; }
+        public string Image { get; set; } // TODO: Här ska pekas till en placeholderbild
     }
 }
