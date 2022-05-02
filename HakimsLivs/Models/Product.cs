@@ -15,6 +15,7 @@ namespace HakimsLivs.Models
         public int? Weight { get; set; }
         public int? Volume { get; set; }
         [Required(ErrorMessage = "Välj en kategori.")]
+        public int CategoryID { get; set; }
         public Category Category { get; set; }
         [Required]
         public int Inventory { get; set; } = 0;

@@ -22,6 +22,7 @@ namespace HakimsLivs.Pages.Products
 
         [BindProperty]
         public Product Product { get; set; }
+        public List<SelectListItem> Categories { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -35,7 +36,14 @@ namespace HakimsLivs.Pages.Products
                 .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.ID == id);
 
-
+            Categories = await _context.Categories.AsNoTracking()
+                .OrderBy(c => c.Name)
+                .Select(c => new SelectListItem
+                {
+                    Value = c.ID.ToString(),
+                    Text = c.Name
+                })
+                .ToListAsync();
 
             if (Product == null)
             {
