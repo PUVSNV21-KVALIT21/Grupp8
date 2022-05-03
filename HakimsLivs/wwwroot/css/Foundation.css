@@ -63,8 +63,8 @@ button {
 }
 
 #sticky {
-    background-color: violet;
-    display: flex;
+    background-color: #282828;
+    display: block;
     flex-direction: column;
     width: 290px;
     height: 1000px;
@@ -72,6 +72,10 @@ button {
     position: -webkit-sticky;
     position: sticky;
     margin-top: 0px;
+}
+
+#categorybutton {
+    width: 100%;
 }
 
 #base {

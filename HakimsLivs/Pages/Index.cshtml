@@ -17,7 +17,10 @@
     <form>
         <div id="middle">
             <div id="sticky">
-                <p>Hhjdsjshdjsdhjsdh</p>
+                @foreach (var category in Model.Categories)
+            {
+                <button id="categorybutton" type="submit">@category</button>
+            }
             </div>
             <div id="base">
                 <p>hejfhsjfhsekfjsef</p>
