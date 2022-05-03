@@ -21,17 +21,13 @@ namespace HakimsLivs.Pages
             this.database = database;
         }
 
-        //public void OnGet()
-        //{
-
-        //}
 
         public void OnGet()
         {
             var categorieExist = database.Categories.Any();
             var productsExist = database.Products.Any();
             if (categorieExist == false || productsExist == false)
-            { 
+            {
                 string[] categories = System.IO.File.ReadAllLines(@"Data\HLCategories.csv");
                 foreach (string name in categories)
                 {
@@ -42,8 +38,8 @@ namespace HakimsLivs.Pages
                     database.Categories.Add(category);
                     database.SaveChanges();
                 }
-            
-            string[] products = System.IO.File.ReadAllLines(@"Data\HLProducts.csv");
+
+                string[] products = System.IO.File.ReadAllLines(@"Data\HLProducts.csv");
                 foreach (string entry in products)
                 {
                     string[] split = entry.Split(';');
@@ -57,32 +53,32 @@ namespace HakimsLivs.Pages
                     var category = database.Categories.Single(m => m.Name == categoryName);
                     if (split[2] == "")
                     {
-                    Product product = new Product
+                        Product product = new Product
+                        {
+                            Name = name,
+                            Price = decimal.Parse(price),
+                            Weight = null,
+                            Volume = int.Parse(mililiter),
+                            Category = category,
+                            Inventory = int.Parse(amount),
+                            Image = picture
+                        };
+                        database.Products.Add(product);
+                    }
+                    if (split[3] == "")
                     {
-                        Name = name,
-                        Price = decimal.Parse(price),
-                        Weight = null,
-                        Volume = int.Parse(mililiter),
-                        Category = category,
-                        Inventory = int.Parse(amount),
-                        Image = picture
-                    };
-                    database.Products.Add(product);
-                }
-                if (split[3] == "")
-                {
-                    Product product = new Product
-                    {
-                        Name = name,
-                        Price = decimal.Parse(price),
-                        Weight = int.Parse(gram),
-                        Volume = null,
-                        Category = category,
-                        Inventory = int.Parse(amount),
-                        Image = picture
-                    };
-                    database.Products.Add(product);
-                }
+                        Product product = new Product
+                        {
+                            Name = name,
+                            Price = decimal.Parse(price),
+                            Weight = int.Parse(gram),
+                            Volume = null,
+                            Category = category,
+                            Inventory = int.Parse(amount),
+                            Image = picture
+                        };
+                        database.Products.Add(product);
+                    }
                     database.SaveChanges();
 
                 }
