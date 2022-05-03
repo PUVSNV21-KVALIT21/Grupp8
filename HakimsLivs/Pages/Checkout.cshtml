@@ -1,7 +1,6 @@
 ﻿@page
-@model IndexModel
+@model HakimsLivs.Pages.CheckoutModel
 @{
-    ViewData["Title"] = "Home page";
 }
 
 <!DOCTYPE html>
@@ -16,19 +15,17 @@
 <body>
     <form>
         <div id="middle">
-            <div id="sticky">
-                <p>Hhjdsjshdjsdhjsdh</p>
-            </div>
             <div id="base">
                 <p>hejfhsjfhsekfjsef</p>
+            </div>
+            <div id="sticky">
+                <p>Hhjdsjshdjsdhjsdh</p>
             </div>
         </div>
 
         <div id="top">
             <h1>Hakims Livs</h1>
-            <input type="text" id="start" placeholder="Search" autofocus>
-            <button type="submit" asp-page="/Login">Login</button>
-            <button type="submit" asp-page="/Checkout">Checkout</button>
+            <button type="submit" asp-page="/Index">Checkout</button>
         </div>
     </form>
     <footer id="bottom">
@@ -36,4 +33,3 @@
     </footer>
 </body>
 </html>
-
