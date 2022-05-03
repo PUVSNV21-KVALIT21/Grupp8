@@ -21,6 +21,7 @@ namespace HakimsLivs.Pages
             this.database = database;
         }
 
+        public List<string> Categories { get; set; }
 
         public void OnGet()
         {
@@ -79,11 +80,11 @@ namespace HakimsLivs.Pages
                         };
                         database.Products.Add(product);
                     }
-                    database.SaveChanges();
-
+                    database.SaveChanges();                
                 }
             }
 
+            Categories = database.Categories.OrderBy(c => c.Name).Select(c => c.Name).ToList();
         }
     }
 }
