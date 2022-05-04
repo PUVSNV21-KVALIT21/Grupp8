@@ -52,6 +52,14 @@ button {
     width: 300px;
 }
 
+#title {
+    color: inherit;
+    font-size: 32px;
+    text-align: center;
+    text-decoration: none;
+    padding: 4px;
+}
+
 /*body*/
 #middle {
     display: flex;
