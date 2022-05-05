@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using HakimsLivs.Data;
 using HakimsLivs.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Net;
 
 namespace HakimsLivs.Pages.Products
 {
@@ -35,16 +36,31 @@ namespace HakimsLivs.Pages.Products
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
+            // Ensures that the image URL given is valid, if not: the "Image not available" shows
+            bool exists;
+            try
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Product.Image);
+                request.Method = "HEAD";
+                request.GetResponse();
+                exists = true;
+            }
+            catch
+            {
+                exists = false;
+            }
+
             var newProduct = new Product();
             newProduct.Name = Product.Name;
             newProduct.Price = Product.Price;
             newProduct.Inventory = Product.Inventory;
             newProduct.Weight = Product.Weight;
             newProduct.Volume = Product.Volume;
-            newProduct.Image = Product.Image;
-            if(Product.Image == "" || Product.Image == null) { newProduct.Image = @"https://www.feednavigator.com/var/wrbm_gb_food_pharma/storage/images/_aliases/news_large/9/2/8/5/235829-6-eng-GB/Feed-Test-SIC-Feed-20142.jpg"; };
+            if(Product.Image == "" || Product.Image == null || exists == false) { newProduct.Image = @"https://www.feednavigator.com/var/wrbm_gb_food_pharma/storage/images/_aliases/news_large/9/2/8/5/235829-6-eng-GB/Feed-Test-SIC-Feed-20142.jpg"; }
+            else if (exists == true) { newProduct.Image = Product.Image; }
             newProduct.Category = database.Categories.Where(c => c.Name == Product.Category.Name).First();
-            
+
+
             if (!ModelState.IsValid)
             {
                 return Page();

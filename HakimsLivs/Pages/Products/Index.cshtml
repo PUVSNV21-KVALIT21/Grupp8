@@ -5,62 +5,66 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Produkter</h1>
+<h2><i>Skapa, ändra och radera produkter</i></h2>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a asp-page="Create"><b>Skapa ny produkt</b></a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Product[0].Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Product[0].Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Product[0].Weight)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Product[0].Volume)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Product[0].Inventory)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Product[0].Image)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Product) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Weight)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Volume)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Inventory)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Image)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
-        </tr>
+
+@foreach (var item in Model.Product)
+{
+ <table>
+     <tbody>
+         <tr>
+             <td>
+                 <img src=@Html.DisplayFor(modelItem => item.Image)
+                      width="200" />
+             </td>
+         </tr>
+         <tr>
+             <td>
+                 <b>Produktnamn:</b> @Html.DisplayFor(modelItem => item.Name)
+             </td>
+         </tr>
+         <tr>
+             <td>
+                 <b>Pris:</b> @Html.DisplayFor(modelItem => item.Price) kr
+             </td>
+         </tr>
+         <tr>
+             @if (!(item.Weight == null) && !(item.Volume == null))
+             {
+                 <td>
+                     <b>Vikt:</b> @Html.DisplayFor(modelItem => item.Weight) gram | <b>Volym</b> @Html.DisplayFor(modelItem => item.Volume) ml
+                 </td>
+             }
+             @if (item.Volume == null)
+             {
+                 <td>
+                     <b>Vikt:</b> @Html.DisplayFor(modelItem => item.Weight) gram
+                 </td>
+             }
+             @if (item.Weight == null)
+             {
+                 <td>
+                     <b>Volym:</b> @Html.DisplayFor(modelItem => item.Volume) ml
+                 </td>
+             }
+         </tr>
+         <tr>
+             <td>
+                 <b>Lagersaldo:</b> @Html.DisplayFor(modelItem => item.Inventory)
+             </td>
+         </tr>
+         <tr>
+             <td>
+                 <a asp-page="./Edit" asp-route-id="@item.ID">Editera</a> |
+                 <a asp-page="./Details" asp-route-id="@item.ID">Detaljer</a> |
+                 <a asp-page="./Delete" asp-route-id="@item.ID">Radera</a>
+             </td>
+         </tr>
+     </tbody>
+ </table>
 }
-    </tbody>
-</table>
+
