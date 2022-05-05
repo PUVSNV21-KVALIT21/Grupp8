@@ -95,32 +95,6 @@ button {
     height: 1300px;
 }
 
-#productfoundation {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    padding: 10px;
-    margin: 10px;
-    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%), 0 25px 50px 0 rgb(0 0 0 / 10%);
-}
-
-#top {
-    font-size: 44px;
-}
-
-#quantity {
-    display: flex;
-    gap: 10px;
-}
-
-.buttonpro {
-    border: 2px solid rgba(245, 11, 11, 0.979);
-    padding: 2px 20px;
-    font-size: 30px;
-    cursor: pointer;
-    border-radius: 50%;
-}
-
 /*footer*/
 #bottom {
     background-color: tomato;
