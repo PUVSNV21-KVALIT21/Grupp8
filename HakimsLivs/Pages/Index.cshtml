@@ -26,7 +26,7 @@
                @foreach (var item in Model.ProductList)
                {
                     <div id="productfoundation">
-                        <div id="toppro">
+                        <div>
                                 <img src=@Html.DisplayFor(modelItem => item.Image)
                                      width="200" ,
                                      height="133" />
@@ -63,9 +63,21 @@
                 <img src="~/css/HakimsLivsLogo.jpg" height="80" , width="140" />
             </a>
             <input type="text" id="start" placeholder="Search" autofocus>
-            <button type="submit" asp-page="/Login">Login</button>
-            <button type="submit" asp-page="/Checkout">Checkout</button>
-            <a class="button" href="/Products">Products</a>
+            <div id="menu">
+                <button type="submit" asp-page="/Login">Login</button>
+                <button type="submit" asp-page="/Orders/Index">Cart</button>
+                <button type="submit" asp-page="/Checkout">Checkout</button>
+                <button type="submit" asp-page="/Product/Index">Products</button>
+
+            </div>
+            <div id="smallmenu">
+                <ul>
+                    <li><a href="/Login">Login</a></li>
+                    <li><a href="/Orders">Orders</a></li>
+                    <li><a href="/Products">Products</a></li>
+                    <li><a href="/Checkout">Checkout</a></li>
+                </ul>
+            </div>
         </div>
     </form>
     <footer id="bottom">
