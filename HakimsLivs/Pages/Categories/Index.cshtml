@@ -1,0 +1,56 @@
+﻿@page
+@model HakimsLivs.Pages.Categories.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<link rel="stylesheet" href="~/css/ProductPage.css">
+
+<div id="top">
+    <a id="title" href="/Index">
+        <img src="~/css/HakimsLivsLogo.jpg" height="80" , width="140" />
+    </a>
+    <input type="text" id="start" placeholder="Search" autofocus>
+    <button type="submit" asp-page="/Login">Login</button>
+    <button type="submit" asp-page="/Checkout">Checkout</button>
+    <a class="button" href="/Products">Products</a>
+    <a class="button" href="/Categories">Kategorier</a>
+</div>
+
+<p> . </p>
+<p> . </p>
+<p> . </p>
+<p> . </p>
+
+<h1>Kategorier</h1>
+<h2><i>Skapa, ändra och radera kategorier</i></h2>
+
+<p>
+    <a asp-page="Create">Skapa ny kategori</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Kategorier
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Category)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.ID">Editera</a> |
+                    <!--<a asp-page="./Details" asp-route-id="@item.ID">Details</a> | -->
+                    <a asp-page="./Delete" asp-route-id="@item.ID">Radera</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
