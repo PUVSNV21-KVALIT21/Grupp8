@@ -20,28 +20,38 @@
             </div>
             <div class="form-group">
                 <label asp-for="Product.Price" class="control-label"></label>
-                <input asp-for="Product.Price" class="form-control" />
+                <input type="number" min="0" asp-for="Product.Price" class="form-control" />
                 <span asp-validation-for="Product.Price" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Product.Weight" class="control-label"></label>
-                <input asp-for="Product.Weight" class="form-control" />
+                <input type="number" min="0" asp-for="Product.Weight" class="form-control" />
                 <span asp-validation-for="Product.Weight" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Product.Volume" class="control-label"></label>
-                <input asp-for="Product.Volume" class="form-control" />
+                <input type="number" min="0" asp-for="Product.Volume" class="form-control" />
                 <span asp-validation-for="Product.Volume" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Product.Inventory" class="control-label"></label>
-                <input asp-for="Product.Inventory" class="form-control" />
+                <input type="number" min="0" asp-for="Product.Inventory" class="form-control" />
                 <span asp-validation-for="Product.Inventory" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Product.Image" class="control-label"></label>
                 <input asp-for="Product.Image" class="form-control" />
                 <span asp-validation-for="Product.Image" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.Category" class="control-label"></label>
+                <select asp-for="Product.Category.Name">
+                    @foreach (var category in Model.categoryList)
+                    {
+                        <option value=@category>@category</option>
+                    }
+                </select>
+                <span asp-validation-for="Product.Category.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
