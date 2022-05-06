@@ -45,6 +45,10 @@
                 <span asp-validation-for="Product.Image" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Product.Category">Category</label>
+                <select asp-for="Product.Category" asp-items="Model.Categories"></select>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>

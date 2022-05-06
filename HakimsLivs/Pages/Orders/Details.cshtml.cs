@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using HakimsLivs.Data;
 using HakimsLivs.Models;
 
-namespace HakimsLivs.Pages.Products
+namespace HakimsLivs.Pages.Orders
 {
     public class DetailsModel : PageModel
     {
@@ -19,7 +19,7 @@ namespace HakimsLivs.Pages.Products
             _context = context;
         }
 
-        public Product Product { get; set; }
+        public Order Order { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -28,12 +28,9 @@ namespace HakimsLivs.Pages.Products
                 return NotFound();
             }
 
-            Product = await _context.Products
-                .Include(p => p.Category)
-                .AsNoTracking()
-                .FirstOrDefaultAsync(m => m.ID == id);
+            Order = await _context.Orders.FirstOrDefaultAsync(m => m.ID == id);
 
-            if (Product == null)
+            if (Order == null)
             {
                 return NotFound();
             }
