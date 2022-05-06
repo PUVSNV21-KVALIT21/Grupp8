@@ -1,0 +1,28 @@
+﻿@page
+@model HakimsLivs.Pages.Categories.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+<link rel="stylesheet" href="~/css/ProductPage.css">
+
+<h1>Radera kategori</h1>
+
+<h3>Är du säker att du vill radera denna kategorin?</h3>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            <b>Kategorinamn:</b>
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Category.Name)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="Category.ID" />
+        <input type="submit" value="Radera" class="btn btn-danger" /> |
+        <a asp-page="./Index">Tillbaka</a>
+    </form>
+</div>
