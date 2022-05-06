@@ -1,0 +1,42 @@
+﻿* {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    line-height: 1.4em;
+    background-color: darkseagreen;
+    color: #000000;
+    margin: auto;
+    border: none;
+}
+
+#top {
+    display: flex;
+    flex-direction: row;
+    position: fixed;
+    width: 100%;
+    left: 50%;
+    top: 20px;
+    transform: translate(-50%, -50%);
+    gap: 50px;
+    padding: 10px;
+    margin: 10px;
+    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%), 0 25px 50px 0 rgb(0 0 0 / 10%)
+}
+
+table{padding: 3px;}
+
+img{align-content:center;}
+
+td, b, tr {
+    background-color: cornsilk;
+    color: black;
+    max-width: 200px;
+}
+
+a {
+    background-color: cornsilk;
+    color: blue;
+}
+
+.flexboxTable {
+    display: flex;
+    flex-wrap: wrap;
+}

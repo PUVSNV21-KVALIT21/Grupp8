@@ -10,6 +10,7 @@ using HakimsLivs.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
 
+
 namespace HakimsLivs.Pages.Products
 {
     public class CreateModel : PageModel
@@ -61,11 +62,11 @@ namespace HakimsLivs.Pages.Products
             newProduct.Category = database.Categories.Where(c => c.Name == Product.Category.Name).First();
 
 
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid )
             {
                 return Page();
             }
-
+           
             database.Products.Add(newProduct);
             await database.SaveChangesAsync();
 
