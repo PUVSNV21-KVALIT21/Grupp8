@@ -22,6 +22,7 @@ namespace HakimsLivs.Pages
         }
 
         public List<string> Categories { get; set; }
+        public IList<Product> ProductList { get; set; }
 
         public void OnGet()
         {
@@ -84,7 +85,9 @@ namespace HakimsLivs.Pages
                 }
             }
 
-            Categories = database.Categories.OrderBy(c => c.Name).Select(c => c.Name).ToList();
+            Categories =  database.Categories.OrderBy(c => c.Name).Select(c => c.Name).ToList();
+
+            ProductList = database.Products.ToList();
         }
     }
 }
