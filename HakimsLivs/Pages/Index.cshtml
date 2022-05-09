@@ -60,17 +60,28 @@
             }
         </div>
     </div>
+        <div id="top">
+            <a id="title" href="/Index">
+                <img src="~/css/HakimsLivsLogo.jpg" height="80" , width="140" />
+            </a>
+            <input type="text" id="start" placeholder="Search" autofocus>
+            <div id="menu">
+                <button type="submit" asp-page="/Login">Login</button>
+                <button type="submit" asp-page="/Orders/Index">Cart</button>
+                <button type="submit" asp-page="/Checkout">Checkout</button>
+                <button type="submit" asp-page="/Product/Index">Products</button>
 
-    <div id="top">
-        <a id="title" href="/Index">
-            <img src="~/css/HakimsLivsLogo.jpg" height="80" , width="140" />
-        </a>
-        <input type="text" id="start" placeholder="Search" autofocus>
-        <button type="submit" asp-page="/Login">Login</button>
-        <button type="submit" asp-page="/Checkout">Checkout</button>
-        <a class="button" href="/Products">Products</a>
-    </div>
-    </div>
+            </div>
+            <div id="smallmenu">
+                <ul>
+                    <li><a href="/Login">Login</a></li>
+                    <li><a href="/Orders">Orders</a></li>
+                    <li><a href="/Products">Products</a></li>
+                    <li><a href="/Checkout">Checkout</a></li>
+                </ul>
+            </div>
+        </div>
+    </form>
     <footer id="bottom">
         <p>Hakim Livs info</p>
     </footer>
