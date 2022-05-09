@@ -14,50 +14,52 @@
 </head>
 
 <body>
-    <form>
-        <div id="middle">
-            <div id="sticky">
-                @foreach (var category in Model.Categories)
+    <div id=categoryList>
+    <div id="middle">
+        <div id="sticky">
+            <form method="post">
+                <button id="categorybutton" name="All" type="submit">Alla kategorier</button>
+                @foreach (var category in Model.categoriesInProduct)
                 {
-                     <button id="categorybutton" type="submit">@category</button>
+                    <button id="categorybutton" name=@category type="submit">@category</button>
                 }
-            </div>
-            <div id="base">
-               @foreach (var item in Model.ProductList)
-               {
-                    <div id="productfoundation">
-                        <div>
-                                <img src=@Html.DisplayFor(modelItem => item.Image)
-                                     width="200" ,
-                                     height="133" />
-
-                                <p style="font-size: 28px">@item.Name</p>
-                                <p style="font-size: 20px">@item.Price.ToString() :-</p>
-
-                                @if (!(item.Weight == null) && !(item.Volume == null))
-                                {
-                                    <p>@item.Weight.ToString() g| @item.Volume.ToString() ml</p>
-                                }
-                                @if (item.Volume == null)
-                                {
-                                    <p>@item.Weight.ToString() g</p>
-                                }
-                                @if (item.Weight == null)
-                                {
-                                    <p>@item.Volume.ToString() ml</p>
-                                }
-                        </div>
-
-                        <div id="quantity">
-                            <button class="buttonpro" type="button">+</button>
-                            <p>0</p>
-                            <button class="buttonpro" type="button">-</button>
-                        </div>
-                    </div>
-               }
-            </div>
+            </form>
         </div>
+        <div id="base">
+            @foreach (var item in Model.ProductList)
+            {
+                <div id="productfoundation">
+                    <div id="toppro">
+                        <img src=@Html.DisplayFor(modelItem => item.Image)
+                             width="200" ,
+                             height="133" />
 
+                        <p style="font-size: 28px">@item.Name</p>
+                        <p style="font-size: 20px">@item.Price.ToString() :-</p>
+
+                        @if (!(item.Weight == null) && !(item.Volume == null))
+                        {
+                            <p>@item.Weight.ToString() g| @item.Volume.ToString() ml</p>
+                        }
+                        @if (item.Volume == null)
+                        {
+                            <p>@item.Weight.ToString() g</p>
+                        }
+                        @if (item.Weight == null)
+                        {
+                            <p>@item.Volume.ToString() ml</p>
+                        }
+                    </div>
+
+                    <div id="quantity">
+                        <button class="buttonpro" type="button">+</button>
+                        <p>0</p>
+                        <button class="buttonpro" type="button">-</button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
         <div id="top">
             <a id="title" href="/Index">
                 <img src="~/css/HakimsLivsLogo.jpg" height="80" , width="140" />
