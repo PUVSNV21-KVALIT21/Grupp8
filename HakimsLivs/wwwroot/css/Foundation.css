@@ -52,6 +52,18 @@ button {
         color: white;
     }
 
+.menuButtons{
+    border: 2px solid grey;
+    background-color: #282828;
+    padding: 8px 18px;
+    font-size: 16px;
+    cursor: pointer;
+}
+.menuButton:hover {
+    background-color: rgba(245, 11, 11, 0.979);
+    color: white;
+}
+
 #start {
     border: 2px solid grey;
     width: 500px;
