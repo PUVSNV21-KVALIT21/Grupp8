@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace HakimsLivs.Pages
@@ -34,7 +35,7 @@ namespace HakimsLivs.Pages
             var productsExist = database.Products.Any();
             if (categorieExist == false || productsExist == false)
             {
-                string[] categories = System.IO.File.ReadAllLines(@"Data\HLCategories.csv");
+                string[] categories = System.IO.File.ReadAllLines(@"Data\HLCategories.csv", Encoding.GetEncoding("iso-8859-1"));
                 foreach (string name in categories)
                 {
                     Category category = new Category
@@ -45,7 +46,7 @@ namespace HakimsLivs.Pages
                     database.SaveChanges();
                 }
 
-                string[] products = System.IO.File.ReadAllLines(@"Data\HLProducts.csv");
+                string[] products = System.IO.File.ReadAllLines(@"Data\HLProducts.csv", Encoding.GetEncoding("iso-8859-1"));
                 foreach (string entry in products)
                 {
                     string[] split = entry.Split(';');
