@@ -14,15 +14,19 @@ namespace HakimsLivs.Pages
     {
         private readonly ILogger<IndexModel> _logger;
         private readonly ApplicationDbContext database;
+        private readonly HakimsLivs.Data.ApplicationDbContext _context;
 
-        public IndexModel(ILogger<IndexModel> logger, ApplicationDbContext database)
+        public IndexModel(ILogger<IndexModel> logger, ApplicationDbContext database, HakimsLivs.Data.ApplicationDbContext context)
         {
+            _context = context;
             _logger = logger;
             this.database = database;
         }
 
-        public List<string> Categories { get; set; }
+        public List<string> categoriesInProduct { get; set; }
         public IList<Product> ProductList { get; set; }
+
+        public bool categoryIsSelected { get; set; } = false;
 
         public void OnGet()
         {
@@ -85,9 +89,32 @@ namespace HakimsLivs.Pages
                 }
             }
 
-            Categories =  database.Categories.OrderBy(c => c.Name).Select(c => c.Name).ToList();
+            //Categories =  database.Categories.OrderBy(c => c.Name).Select(c => c.Name).ToList();
+            var Categories = database.Products.Where(p => p.Inventory > 0).Select(p => p.Category).AsEnumerable().GroupBy(c => c.Name).ToList();
+            categoriesInProduct = Categories.Select(c => c.Key).ToList();
+            if (categoryIsSelected == false) {
+                ProductList = database.Products.ToList();
+            }
 
-            ProductList = database.Products.ToList();
+            
+        }
+        public void OnPost()
+        {
+            var Categories = database.Products.Where(p => p.Inventory > 0).Select(p => p.Category).AsEnumerable().GroupBy(c => c.Name).ToList();
+            categoriesInProduct = Categories.Select(c => c.Key).ToList();
+
+            categoryIsSelected = true;
+            var selectedCategory = Request.Form.Keys.First();
+            if(selectedCategory == "All")
+            {
+                ProductList = database.Products.ToList();
+            }
+            else
+            {
+                ProductList = database.Products.Where(c => c.Category.Name == selectedCategory).ToList();
+            }
+
+            Page();
         }
     }
 }
