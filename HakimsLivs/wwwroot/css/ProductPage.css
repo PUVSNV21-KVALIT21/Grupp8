@@ -41,6 +41,18 @@ a {
     flex-wrap: wrap;
 }
 
+.flexboxTableCustomer {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column
+}
+
+.tdCustomer {
+    background-color: cornsilk;
+    color: black;
+    min-width: 400px;
+}
+
 .row {
     display: flex;
     flex-wrap: wrap;

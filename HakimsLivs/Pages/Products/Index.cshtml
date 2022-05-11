@@ -6,22 +6,16 @@
 }
 <link rel="stylesheet" href="~/css/ProductPage.css">
 
-<div id="top">
+<nav id="top">
     <a id="title" href="/Index">
         <img src="~/css/HakimsLivsLogo.jpg" height="80" , width="140" />
     </a>
     <input type="text" id="start" placeholder="Search" autofocus>
-    <button type="submit" asp-page="/Login">Login</button>
-    <button type="submit" asp-page="/Checkout">Checkout</button>
-    <a class="button" href="/Products">Products</a>
+    <a class="button" href="/Index">Startsida</a>
+    <a class="button" href="/Products">Produkter</a>
     <a class="button" href="/Categories">Kategorier</a>
-</div>
-
-<p> . </p>
-<p> . </p>
-<p> . </p>
-<p> . </p>
-
+    <a class="button" href="/Categories/Details">Kunder</a>
+</nav>
 
 <h1>
     Produkter
@@ -35,7 +29,6 @@
 <div class=flexboxTable>
     @foreach (var item in Model.Product)
     {
-
         <table>
             <tbody>
                 <tr>
