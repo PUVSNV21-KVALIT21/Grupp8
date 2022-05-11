@@ -27,6 +27,8 @@ namespace HakimsLivs.Pages
         public IList<Product> ProductList { get; set; }
 
         public bool categoryIsSelected { get; set; } = false;
+        //[BindProperty]
+        //public string searchString { get; set; }
 
         public void OnGet()
         {
@@ -123,6 +125,11 @@ namespace HakimsLivs.Pages
             {
                 ProductList = database.Products.Where(c => c.Category.Name == selectedCategory).ToList();
             }
+
+            //if (!String.IsNullOrEmpty(searchString)) 
+            //{ 
+            //    ProductList = ProductList.Where(s => s.Name.ToLower().Contains(searchString)).ToList(); 
+            //}
 
             Page();
         }
