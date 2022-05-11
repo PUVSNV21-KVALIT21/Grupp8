@@ -1,7 +1,7 @@
 ﻿* {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     line-height: 1.4em;
-    background-color: #282828;
+    background-color: darkseagreen;
     color: rgba(245, 11, 11, 0.979);
     margin: auto;
     border: none;
@@ -68,7 +68,7 @@ body {
 
 button {
     border: 2px solid grey;
-    background-color: #282828;
+    background-color: white;
     padding: 8px 18px;
     font-size: 16px;
     cursor: pointer;
@@ -115,12 +115,15 @@ button {
     margin-top: 70px;
     width: 100%;
     position: relative;
-    top: 70px;
+    top: 110px;
     margin: 0;
+    border-right: 2px solid grey;
+    border-left: 2px solid grey;
+    border-bottom: 2px solid grey;
 }
 
 #sticky {
-    background-color: #282828;
+    background-color: darkseagreen;
     display: block;
     flex-direction: column;
     width: 290px;
@@ -137,7 +140,7 @@ button {
 }
 
 #base {
-    background-color: turquoise;
+    background-color: white;
     display: flex;
     flex-direction: row;
     top: 0px;
@@ -180,6 +183,7 @@ button {
     width: 100%;
     display: flex;
     align-items: center;
+    margin-top: 130px;
 }
 
 @media (max-width: 780px) {
@@ -194,8 +198,12 @@ button {
     }
 }
 
-@media (max-width: 550px) {
+@media (max-width: 630px) {
     #top {
         gap: 0;
+    }
+    
+    #middle {
+        border: none;
     }
 }

@@ -27,6 +27,8 @@ namespace HakimsLivs.Pages
         public IList<Product> ProductList { get; set; }
 
         public bool categoryIsSelected { get; set; } = false;
+        //[BindProperty]
+        //public string searchString { get; set; }
 
         public void OnGet()
         {
@@ -34,7 +36,7 @@ namespace HakimsLivs.Pages
             var productsExist = database.Products.Any();
             if (categorieExist == false || productsExist == false)
             {
-                string[] categories = System.IO.File.ReadAllLines(@"Data\HLCategories.csv");
+                string[] categories = System.IO.File.ReadAllLines(@"Data\HLCategories.csv", System.Text.Encoding.GetEncoding("ISO-8859-1"));
                 foreach (string name in categories)
                 {
                     Category category = new Category
@@ -45,7 +47,7 @@ namespace HakimsLivs.Pages
                     database.SaveChanges();
                 }
 
-                string[] products = System.IO.File.ReadAllLines(@"Data\HLProducts.csv");
+                string[] products = System.IO.File.ReadAllLines(@"Data\HLProducts.csv", System.Text.Encoding.GetEncoding("ISO-8859-1"));
                 foreach (string entry in products)
                 {
                     string[] split = entry.Split(';');
@@ -123,6 +125,11 @@ namespace HakimsLivs.Pages
             {
                 ProductList = database.Products.Where(c => c.Category.Name == selectedCategory).ToList();
             }
+
+            //if (!String.IsNullOrEmpty(searchString)) 
+            //{ 
+            //    ProductList = ProductList.Where(s => s.Name.ToLower().Contains(searchString)).ToList(); 
+            //}
 
             Page();
         }
