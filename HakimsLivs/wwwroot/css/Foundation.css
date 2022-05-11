@@ -2,7 +2,6 @@
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     line-height: 1.4em;
     background-color: darkseagreen;
-    color: rgba(245, 11, 11, 0.979);
     margin: auto;
     border: none;
 }
@@ -79,16 +78,15 @@ button {
         color: white;
     }
 
-.menuButtons{
-    border: 2px solid grey;
-    background-color: #282828;
-    padding: 8px 18px;
-    font-size: 16px;
-    cursor: pointer;
+.menuButton {
+    background-color: #199319;
+    color: white;
+    padding: 15px 25px;
+    text-decoration: none;
 }
 .menuButton:hover {
-    background-color: rgba(245, 11, 11, 0.979);
     color: white;
+    background-color: black;
 }
 
 #start {
