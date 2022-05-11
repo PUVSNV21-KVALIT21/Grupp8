@@ -21,7 +21,7 @@
                 <button id="categorybutton" name="All" type="submit">Alla kategorier</button>
                 @foreach (var category in Model.categoriesInProduct)
                 {
-                    <button id="categorybutton" name=@category type="submit">@category</button>
+                    <button id="categorybutton" name="@category" type="submit">@category</button>
                 }
             </form>
         </div>
