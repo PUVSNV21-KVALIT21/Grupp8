@@ -6,30 +6,24 @@
 }
 <link rel="stylesheet" href="~/css/ProductPage.css">
 
-<div id="top">
+<nav id="top">
     <a id="title" href="/Index">
         <img src="~/css/HakimsLivsLogo.jpg" height="80" , width="140" />
     </a>
-    @*<input type="text" id="start" placeholder="Search" autofocus>*@
-    <div id="menu">
-        @*<a class=menuButton href="/Login">Login</a>*@
-        <a class=menuButton href="/Orders">Orders</a>
-        <a class=menuButton href="/Checkout">Checkout</a>
 
-    </div>
+    <input type="text" id="start" placeholder="Search" autofocus>
+    <a class="button" href="/Index">Startsida</a>
+    <a class="button" href="/Products">Produkter</a>
+    <a class="button" href="/Categories">Kategorier</a>
+    <a class="button" href="/Categories/Details">Kunder</a>
+</nav>
+
     <div id="smallmenu">
         <ul>
             <li><a href="/Orders">Orders</a></li>
             <li><a href="/Checkout">Checkout</a></li>
         </ul>
     </div>
-</div>
-
-<p> . </p>
-<p> . </p>
-<p> . </p>
-<p> . </p>
-
 
 <h1>
     Produkter
@@ -43,7 +37,6 @@
 <div class=flexboxTable>
     @foreach (var item in Model.Product)
     {
-
         <table>
             <tbody>
                 <tr>
