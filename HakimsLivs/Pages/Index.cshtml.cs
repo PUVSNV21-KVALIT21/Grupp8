@@ -97,6 +97,16 @@ namespace HakimsLivs.Pages
             }
 
             
+
+            var saraLevin = database.Users.Where(user => user.UserName == "sara.levin96@gmail.com");
+            var test2 = database.UserRoles.ToList();
+            var test3 = database.Roles.ToList();
+
+           
+
+            var test = database.Users.Select(user => user.UserName).ToList();
+
+
         }
         public void OnPost()
         {
