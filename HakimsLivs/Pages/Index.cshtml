@@ -9,71 +9,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/js/main.js"></script>
     <title>Hakims Livs</title>
     <link rel="stylesheet" href="Foundation.css">
 </head>
 
 <body>
-    <div id=categoryList>
-    <div id="middle">
-        <div id="sticky">
-            <form method="post">
-                <button id="categorybutton" name="All" type="submit">Alla kategorier</button>
-                @foreach (var category in Model.categoriesInProduct)
-                {
-                    <button id="categorybutton" name=@category type="submit">@category</button>
-                }
-            </form>
-        </div>
-        <div id="base">
-            @foreach (var item in Model.ProductList)
-            {
-                <div id="productfoundation">
-                    <div id="toppro">
-                        <img src=@Html.DisplayFor(modelItem => item.Image)
-                             width="200" ,
-                             height="133" />
-
-                        <p style="font-size: 28px">@item.Name</p>
-                        <p style="font-size: 20px">@item.Price.ToString() :-</p>
-
-                        @if (!(item.Weight == null) && !(item.Volume == null))
-                        {
-                            <p>@item.Weight.ToString() g| @item.Volume.ToString() ml</p>
-                        }
-                        @if (item.Volume == null)
-                        {
-                            <p>@item.Weight.ToString() g</p>
-                        }
-                        @if (item.Weight == null)
-                        {
-                            <p>@item.Volume.ToString() ml</p>
-                        }
-                    </div>
-
-                    <div id="quantity">
-                        <button class="buttonpro" type="button">+</button>
-                        <p>0</p>
-                        <button class="buttonpro" type="button">-</button>
-                    </div>
-                </div>
-            }
-        </div>
-    </div>
-        <div id="top">
+    <main>
+        <nav id="top">
             <a id="title" href="/Index">
                 <img src="~/css/HakimsLivsLogo.jpg" height="80" , width="140" />
             </a>
             <input type="text" id="start" placeholder="Search" autofocus>
             <div id="menu">
-                <a class=menuButton href="/Login">Login</a>
+                @*<a class=menuButton href="/Login">Login</a>*@
                 <a class=menuButton href="/Orders">Orders</a>
-                <a class=menuButton href="/Products">Products</a>
                 <a class=menuButton href="/Checkout">Checkout</a>
-                <!--<button type="submit" asp-page="/Login">Login</button>-->
-                <!--<button type="submit" asp-page="/Orders/Index">Cart</button>-->
-                <!--<button type="submit" asp-page="/Checkout">Checkout</button>-->
-                <!--<button type="submit" asp-page="/Product/Index">Products</button>-->
+                <a class=menuButton href="/Products">Admin</a>
 
             </div>
             <div id="smallmenu">
@@ -84,9 +36,57 @@
                     <li><a href="/Checkout">Checkout</a></li>
                 </ul>
             </div>
+        </nav>
+        <div id=categoryList>
+            <div id="middle">
+                <div id="sticky">
+                    <form method="post">
+                        <button id="categorybutton" name="All" type="submit">Alla kategorier</button>
+                        @foreach (var category in Model.categoriesInProduct)
+                        {
+                            <button id="categorybutton" name="@category" type="submit">@category</button>
+                        }
+                    </form>
+                </div>
+                <div id="base">
+                    @foreach (var item in Model.ProductList)
+                    {
+                        <div id="productfoundation">
+                            <div id="toppro">
+                                <img src=@Html.DisplayFor(modelItem => item.Image)
+                                     width="200" ,
+                                     height="133" />
+
+                                <p style="font-size: 28px">@item.Name</p>
+                                <p style="font-size: 20px">@item.Price.ToString() :-</p>
+
+                                @if (!(item.Weight == null) && !(item.Volume == null))
+                                {
+                                    <p>@item.Weight.ToString() g| @item.Volume.ToString() ml</p>
+                                }
+                                @if (item.Volume == null)
+                                {
+                                    <p>@item.Weight.ToString() g</p>
+                                }
+                                @if (item.Weight == null)
+                                {
+                                    <p>@item.Volume.ToString() ml</p>
+                                }
+                            </div>
+
+                            <div id="quantity">
+                                <button class="buttonpro" type="button">+</button>
+                                <p>0</p>
+                                <button class="buttonpro" type="button">-</button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <footer id="bottom">
+                <p>Hakim Livs info</p>
+            </footer>
         </div>
-    <footer id="bottom">
-        <p>Hakim Livs info</p>
-    </footer>
+    </main>
 </body>
 </html>

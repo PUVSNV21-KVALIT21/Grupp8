@@ -7,9 +7,17 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using HakimsLivs.Data;
 using HakimsLivs.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HakimsLivs.Pages.Products
 {
+    [Authorize(Roles = "admin")]
+    public class AdministrationController : Controller
+    {
+        public IActionResult Index() =>
+            Content("admin");
+    }
+
     public class IndexModel : PageModel
     {
         private readonly HakimsLivs.Data.ApplicationDbContext _context;
