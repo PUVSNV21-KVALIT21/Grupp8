@@ -36,7 +36,7 @@ namespace HakimsLivs.Pages
             var productsExist = database.Products.Any();
             if (categorieExist == false || productsExist == false)
             {
-                string[] categories = System.IO.File.ReadAllLines(@"Data\HLCategories.csv");
+                string[] categories = System.IO.File.ReadAllLines(@"Data\HLCategories.csv", System.Text.Encoding.GetEncoding("ISO-8859-1"));
                 foreach (string name in categories)
                 {
                     Category category = new Category
@@ -47,7 +47,7 @@ namespace HakimsLivs.Pages
                     database.SaveChanges();
                 }
 
-                string[] products = System.IO.File.ReadAllLines(@"Data\HLProducts.csv");
+                string[] products = System.IO.File.ReadAllLines(@"Data\HLProducts.csv", System.Text.Encoding.GetEncoding("ISO-8859-1"));
                 foreach (string entry in products)
                 {
                     string[] split = entry.Split(';');
