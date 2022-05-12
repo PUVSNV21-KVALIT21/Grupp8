@@ -1,4 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace HakimsLivs.Models
 {
@@ -8,10 +12,6 @@ namespace HakimsLivs.Models
         [Required]
         public int OrderID { get; set; }
         [Required]
-        public Order Order { get; set; }
-        [Required]
         public int ProductID { get; set; }
-        [Required]
-        public Product Product { get; set; }
     }
 }

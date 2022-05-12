@@ -22,6 +22,7 @@ namespace HakimsLivs.Models
         [Required]
         public int Inventory { get; set; } = 0;
         public string Image { get; set; } // TODO: Här ska pekas till en placeholderbild
-        public IList<OrderProduct> OrderProduct { get; set; }
+
+        //public IList<Order> Orders { get; set; }
     }
 }

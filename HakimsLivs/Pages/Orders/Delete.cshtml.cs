@@ -20,7 +20,7 @@ namespace HakimsLivs.Pages.Orders
         }
 
         [BindProperty]
-        public OrderProduct OrderProduct { get; set; }
+        public Order Order { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -29,11 +29,10 @@ namespace HakimsLivs.Pages.Orders
                 return NotFound();
             }
 
-            OrderProduct = await _context.OrderProducts
-                .Include(o => o.Order)
-                .Include(o => o.Product).FirstOrDefaultAsync(m => m.ID == id);
+            Order = await _context.Orders
+                .Include(o => o.User).FirstOrDefaultAsync(m => m.ID == id);
 
-            if (OrderProduct == null)
+            if (Order == null)
             {
                 return NotFound();
             }
@@ -47,11 +46,11 @@ namespace HakimsLivs.Pages.Orders
                 return NotFound();
             }
 
-            OrderProduct = await _context.OrderProducts.FindAsync(id);
+            Order = await _context.Orders.FindAsync(id);
 
-            if (OrderProduct != null)
+            if (Order != null)
             {
-                _context.OrderProducts.Remove(OrderProduct);
+                _context.Orders.Remove(Order);
                 await _context.SaveChangesAsync();
             }
 

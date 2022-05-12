@@ -1,5 +1,6 @@
 ﻿using HakimsLivs.Data;
 using HakimsLivs.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
@@ -7,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 
 namespace HakimsLivs.Pages
 {
@@ -26,12 +28,14 @@ namespace HakimsLivs.Pages
         public List<string> categoriesInProduct { get; set; }
         public IList<Product> ProductList { get; set; }
 
+        [BindProperty]
+        public Order Order { get; set; }
+
         public bool categoryIsSelected { get; set; } = false;
-        //[BindProperty]
-        //public string searchString { get; set; }
 
         public void OnGet()
         {
+            #region If database is empty => products are loaded from CSV files
             var categorieExist = database.Categories.Any();
             var productsExist = database.Products.Any();
             if (categorieExist == false || productsExist == false)
@@ -90,26 +94,16 @@ namespace HakimsLivs.Pages
                     database.SaveChanges();                
                 }
             }
+            #endregion
 
-            //Categories =  database.Categories.OrderBy(c => c.Name).Select(c => c.Name).ToList();
             var Categories = database.Products.Where(p => p.Inventory > 0).Select(p => p.Category).AsEnumerable().GroupBy(c => c.Name).ToList();
             categoriesInProduct = Categories.Select(c => c.Key).ToList();
             if (categoryIsSelected == false) {
                 ProductList = database.Products.ToList();
             }
 
-            
-
-            var saraLevin = database.Users.Where(user => user.UserName == "sara.levin96@gmail.com");
-            var test2 = database.UserRoles.ToList();
-            var test3 = database.Roles.ToList();
-
-           
-
-            var test = database.Users.Select(user => user.UserName).ToList();
-
-
         }
+
         public void OnPost()
         {
             var Categories = database.Products.Where(p => p.Inventory > 0).Select(p => p.Category).AsEnumerable().GroupBy(c => c.Name).ToList();
@@ -126,12 +120,56 @@ namespace HakimsLivs.Pages
                 ProductList = database.Products.Where(c => c.Category.Name == selectedCategory).ToList();
             }
 
-            //if (!String.IsNullOrEmpty(searchString)) 
-            //{ 
-            //    ProductList = ProductList.Where(s => s.Name.ToLower().Contains(searchString)).ToList(); 
-            //}
-
             Page();
+        }
+        
+        public async Task<IActionResult> OnPostView()
+        {
+            #region //categoriesInProduct & ProductList needs to be defined when page reloads
+            var Categories = database.Products.Where(p => p.Inventory > 0).Select(p => p.Category).AsEnumerable().GroupBy(c => c.Name).ToList();
+            categoriesInProduct = Categories.Select(c => c.Key).ToList();
+            ProductList = database.Products.ToList();
+            #endregion
+
+            //Check the the username of current user. If not Logged-in username=null
+            var username = HttpContext.User.Identity.Name;
+
+            //If the username is null, the user is redirected to the login page
+            if(username == null){ return Redirect("./Identity/Account/Login?ReturnUrl=%2FProducts"); }
+
+            //Otherwise, the user if found in the database
+            var user = database.Users.Where(u => u.UserName == username).FirstOrDefault();
+
+            //The ProductID is sent with the form that the button lies within
+            var selectedProductID = int.Parse(Request.Form.Keys.First());
+
+            //Check if there are any open/ongoing orders
+            var currentOrder = database.Orders.Where(o => o.User.UserName == username).Where(o => o.OrderCompleted == false).FirstOrDefault();
+            
+            if(currentOrder == null) //If not, and order is created, and products added to the OrderProduct class
+            {
+                var newOrder = new Order();
+                newOrder.User = user;
+                newOrder.OrderDate = DateTime.Now;
+                newOrder.OrderCompleted = false;
+                database.Orders.Add(newOrder);
+                database.SaveChanges();
+
+                var newOrderProduct = new OrderProduct();
+                newOrderProduct.ProductID = selectedProductID;
+                newOrderProduct.OrderID = newOrder.ID;
+                database.OrderProducts.Add(newOrderProduct);
+                database.SaveChanges();
+            }
+            else //If there is already and ongoing order, the product is added to it. 
+            {
+                var newOrderProduct = new OrderProduct();
+                newOrderProduct.ProductID = selectedProductID;
+                newOrderProduct.OrderID = currentOrder.ID;
+                database.OrderProducts.Add(newOrderProduct);
+                database.SaveChanges();
+            }
+            return Page();
         }
     }
 }

@@ -23,7 +23,7 @@
             @*<input type="text" id="start" placeholder="Search" autofocus>*@
             <div id="menu">
                 @*<a class=menuButton href="/Login">Login</a>*@
-                <a class=menuButton href="/Orders">Orders</a>
+                <a class=menuButton href="/Orders">Varukorg</a>
                 <a class=menuButton href="/Checkout">Checkout</a>
                 <a class=menuButton href="/Products">Admin</a>
 
@@ -76,9 +76,9 @@
                             </div>
 
                             <div id="quantity">
-                                <button class="buttonpro" type="button">+</button>
-                                <p>0</p>
-                                <button class="buttonpro" type="button">-</button>
+                                <form asp-page-handler="view" method="post">
+                                    <button name="@item.ID" type="submit">Lägg till produkt</button>
+                                </form>
                             </div>
                         </div>
                         }
