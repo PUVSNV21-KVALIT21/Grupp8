@@ -16,7 +16,7 @@ main {
 form {
     width: 100%;
     display: flex;
-    margin-bottom: 70px;
+    /*margin-bottom: 70px;*/
     flex-direction: column;
 }
 
@@ -50,18 +50,7 @@ body {
 
 #LogInHeader {
     display: flex;
-    /* flex-direction: row; */
-    /*width: 100%;
-    left: 50%;*/
-    /* top: 20px; */
-    /*transform: translate(-50%, -50%);
-    gap: 50px;
-    padding-left: 15px;
-    padding-right: 35px;
-    padding-top: 30px;
-    margin-top: 20px;*/
-    /*box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%), 0 25px 50px 0 rgb(0 0 0 / 10%);*/
-    /*justify-content: space-evenly;*/
+    flex-direction: column-reverse;
 }
 
 
