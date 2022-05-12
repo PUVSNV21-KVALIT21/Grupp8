@@ -18,31 +18,49 @@
         <div id="middle">
             <div id="sticky">
                 @foreach (var category in Model.Categories)
-            {
-                <button id="categorybutton" type="submit">@category</button>
-            }
+                {
+                     <button id="categorybutton" type="submit">@category</button>
+                }
             </div>
             <div id="base">
-                <div id="productfoundation">
-                    <div id="toppro">
-                        <p>Image</p>
-                        <p>30:-</p>
-                        <p style="font-size: 28px">Banan</p>
-                        <p style="font-size: 20px;">500 g</p>
-                    </div>
+               @foreach (var item in Model.ProductList)
+               {
+                    <div id="productfoundation">
+                        <div id="toppro">
+                                <img src=@Html.DisplayFor(modelItem => item.Image)
+                                     width="200" ,
+                                     height="133" />
 
-                    <div id="quantity">
-                        <button class="buttonpro" type="submit">+</button>
-                        <p>0</p>
-                        <button class="buttonpro" type="submit">-</button>
+                                <p style="font-size: 28px">@item.Name</p>
+                                <p style="font-size: 20px">@item.Price.ToString() :-</p>
+
+                                @if (!(item.Weight == null) && !(item.Volume == null))
+                                {
+                                    <p>@item.Weight.ToString() g| @item.Volume.ToString() ml</p>
+                                }
+                                @if (item.Volume == null)
+                                {
+                                    <p>@item.Weight.ToString() g</p>
+                                }
+                                @if (item.Weight == null)
+                                {
+                                    <p>@item.Volume.ToString() ml</p>
+                                }
+                        </div>
+
+                        <div id="quantity">
+                            <button class="buttonpro" type="button">+</button>
+                            <p>0</p>
+                            <button class="buttonpro" type="button">-</button>
+                        </div>
                     </div>
-                </div>
+               }
             </div>
         </div>
 
         <div id="top">
             <a id="title" href="/Index">
-                Hakims Livs
+                <img src="~/css/HakimsLivsLogo.jpg" height="80" , width="140" />
             </a>
             <input type="text" id="start" placeholder="Search" autofocus>
             <button type="submit" asp-page="/Login">Login</button>

@@ -24,9 +24,12 @@ namespace HakimsLivs.Pages.Products
         [BindProperty]
         public Product Product { get; set; }
         public List<SelectListItem> Categories { get; set; }
+        public List<string> categoryList { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
+            categoryList = await _context.Categories.Select(c => c.Name).ToListAsync();
+
             if (id == null)
             {
                 return NotFound();
@@ -85,6 +88,7 @@ namespace HakimsLivs.Pages.Products
             productToupdate.Inventory = Product.Inventory;
             if (Product.Image == "" || Product.Image == null || exists == false) { productToupdate.Image = @"https://www.feednavigator.com/var/wrbm_gb_food_pharma/storage/images/_aliases/news_large/9/2/8/5/235829-6-eng-GB/Feed-Test-SIC-Feed-20142.jpg"; }
             else if (exists == true) { productToupdate.Image = Product.Image; }
+            productToupdate.Category = _context.Categories.Where(c => c.Name == Product.Category.Name).First();
 
             await _context.SaveChangesAsync();
 

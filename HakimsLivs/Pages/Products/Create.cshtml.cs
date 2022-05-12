@@ -28,7 +28,7 @@ namespace HakimsLivs.Pages.Products
 
         public async Task OnGet()
         {
-            categoryList = await database.Categories.Select(c => c.Name).ToListAsync();;
+            categoryList = await database.Categories.Select(c => c.Name).ToListAsync();
         }
 
         [BindProperty]
