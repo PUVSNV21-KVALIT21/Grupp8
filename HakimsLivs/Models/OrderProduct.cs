@@ -13,7 +13,5 @@ namespace HakimsLivs.Models
         public int ProductID { get; set; }
         [Required]
         public Product Product { get; set; }
-        [Required]
-        public int Amount { get; set; }
     }
 }

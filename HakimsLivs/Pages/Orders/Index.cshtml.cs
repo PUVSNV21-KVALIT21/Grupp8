@@ -19,11 +19,13 @@ namespace HakimsLivs.Pages.Orders
             _context = context;
         }
 
-        public IList<Order> Order { get;set; }
+        public IList<OrderProduct> OrderProduct { get;set; }
 
         public async Task OnGetAsync()
         {
-            Order = await _context.Orders.ToListAsync();
+            OrderProduct = await _context.OrderProducts
+                .Include(o => o.Order).Where()
+                .Include(o => o.Product).ToListAsync();
         }
     }
 }

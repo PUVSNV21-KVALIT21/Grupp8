@@ -21,11 +21,13 @@ namespace HakimsLivs.Pages.Orders
 
         public IActionResult OnGet()
         {
+        ViewData["OrderID"] = new SelectList(_context.Orders, "ID", "User");
+        ViewData["ProductID"] = new SelectList(_context.Products, "ID", "Name");
             return Page();
         }
 
         [BindProperty]
-        public Order Order { get; set; }
+        public OrderProduct OrderProduct { get; set; }
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
@@ -35,7 +37,7 @@ namespace HakimsLivs.Pages.Orders
                 return Page();
             }
 
-            _context.Orders.Add(Order);
+            _context.OrderProducts.Add(OrderProduct);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
