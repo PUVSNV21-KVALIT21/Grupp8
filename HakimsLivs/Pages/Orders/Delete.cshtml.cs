@@ -29,7 +29,8 @@ namespace HakimsLivs.Pages.Orders
                 return NotFound();
             }
 
-            Order = await _context.Orders.FirstOrDefaultAsync(m => m.ID == id);
+            Order = await _context.Orders
+                .Include(o => o.User).FirstOrDefaultAsync(m => m.ID == id);
 
             if (Order == null)
             {

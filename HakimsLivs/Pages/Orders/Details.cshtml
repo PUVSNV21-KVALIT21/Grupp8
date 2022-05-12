@@ -12,10 +12,16 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Order.OrderCompleted)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Order.OrderCompleted)
+        </dd>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Order.User)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Order.User)
+            @Html.DisplayFor(model => model.Order.User.Id)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Order.OrderDate)

@@ -23,7 +23,11 @@ namespace HakimsLivs.Pages.Orders
 
         public async Task OnGetAsync()
         {
-            Order = await _context.Orders.ToListAsync();
+            var username = HttpContext.User.Identity.Name;
+
+            Order = await _context.Orders
+                .Include(o => o.User.UserName == username)
+                .ToListAsync();
         }
     }
 }
