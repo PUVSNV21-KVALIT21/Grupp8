@@ -95,6 +95,7 @@ button {
     padding: 4px;
 }
 
+
 /*body*/
 #middle {
     display: flex;
@@ -158,6 +159,18 @@ button {
     font-size: 30px;
     cursor: pointer;
     border-radius: 50%;
+}
+
+.buttonche {
+    border: 2px solid rgba(245, 11, 11, 0.979);
+    padding: 2px 25px;
+    font-size: inherit;
+    cursor: pointer;
+    border-radius: 30%;
+}
+
+td {
+    padding-bottom: 3px;
 }
 
 /*footer*/
