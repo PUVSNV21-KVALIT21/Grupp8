@@ -23,12 +23,26 @@ namespace HakimsLivs.Pages.Checkout
 
         public IList<OrderProduct> OrderProduct { get;set; }
 
-        public async Task OnGetAsync()
-       {
-            OrderProduct = await _context.OrderProducts
-                //.Include(o => o.ProductID)
-                //.Include(o => o.OrderID)
-                .ToListAsync();
+        public List<Product> Products { get; set; }
+        public Dictionary<Product, int> ProductAmount { get; set; } = new Dictionary<Product, int>();
+
+        public Order Order { get; set; }
+
+        public void OnGet()
+        {
+            var username = HttpContext.User.Identity.Name;
+            var user = _context.Users.Where(u => u.UserName == username).FirstOrDefault();
+
+            Order = _context.Orders.Where(o => o.User.UserName == username).Where(o => o.OrderCompleted == false).FirstOrDefault();
+
+            var productID = _context.OrderProducts.Where(op => op.OrderID == Order.ID).Select(op => op.ProductID);
+            Products = _context.Products.Where(p => productID.Contains(p.ID)).ToList();
+            
+            foreach (var product in Products)
+            {
+                var amount = _context.OrderProducts.Where(op => op.OrderID == Order.ID).Where(op => op.ProductID == product.ID).Count();
+                ProductAmount.Add(product, amount);
+            }
         }
     }
 }
