@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-
 namespace HakimsLivs.Pages
 {
     public class IndexModel : PageModel
