@@ -74,11 +74,16 @@ namespace HakimsLivs.Pages.Orders
             return Page();
         }
 
-        public async Task<IActionResult> RemoveAsync()
+        public async Task<IActionResult> RemoveAsync(int productID)
         {
-            // TODO: Skriv kod för att ta bort ur varukorgen
+            OrderProducts = await _context.OrderProducts.Where(o => o.ProductID == productID).ToListAsync();
 
+            foreach (var orderProduct in OrderProducts)
+            {
+               _context.OrderProducts.Remove(orderProduct);
+            }
 
+            await _context.SaveChangesAsync();
             return Page();
         }
     }
