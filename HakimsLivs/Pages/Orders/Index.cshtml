@@ -5,44 +5,48 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Varukorg</h1>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Order[0].OrderCompleted)
+                Artikel
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Order[0].User)
+                Antal
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Order[0].OrderDate)
+                Á-pris
             </th>
-            <th></th>
+            <th>
+                Totalt
+            </th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Order) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.OrderCompleted)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OrderDate)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
+        @foreach (var product in Model.ProductsInOrderList)
+        {
+            <tr>
+                <td>
+                    @product.ProductName
+                </td>
+                <td>
+                    @product.Amount
+                </td>
+                <td>
+                    @product.PricePerItem
+                </td>
+                <td>
+                    @product.TotalItemPrice
+                </td>
+                <td>
+                    <a href="#decrease">-</a> / <a href="#increase">+</a>
+                </td>
+                <td>
+                    <a href="#remove">Ta Bort</a>
+                </td>
+            </tr>
+        }
+
 </table>
