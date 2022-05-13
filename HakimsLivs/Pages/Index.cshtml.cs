@@ -27,6 +27,8 @@ namespace HakimsLivs.Pages
         public List<string> categoriesInProduct { get; set; }
         public IList<Product> ProductList { get; set; }
 
+        public int ItemsInOrder { get; set; } = 0;
+
         [BindProperty]
         public Order Order { get; set; }
 
@@ -101,6 +103,11 @@ namespace HakimsLivs.Pages
                 ProductList = database.Products.ToList();
             }
 
+            if (HttpContext.User.Identity.Name != null)
+            {
+                var currentOrder = database.Orders.Where(o => o.User.UserName == HttpContext.User.Identity.Name).FirstOrDefault();
+                ItemsInOrder = database.OrderProducts.Where(op => op.OrderID == currentOrder.ID).Count();
+            }
         }
 
         public void OnPost()
@@ -117,6 +124,12 @@ namespace HakimsLivs.Pages
             else
             {
                 ProductList = database.Products.Where(c => c.Category.Name == selectedCategory).ToList();
+            }
+
+            if (HttpContext.User.Identity.Name != null)
+            {
+                var currentOrder = database.Orders.Where(o => o.User.UserName == HttpContext.User.Identity.Name).FirstOrDefault();
+                ItemsInOrder = database.OrderProducts.Where(op => op.OrderID == currentOrder.ID).Count();
             }
 
             Page();
@@ -159,6 +172,8 @@ namespace HakimsLivs.Pages
                 newOrderProduct.OrderID = newOrder.ID;
                 database.OrderProducts.Add(newOrderProduct);
                 database.SaveChanges();
+
+                ItemsInOrder = database.OrderProducts.Where(op => op.OrderID == newOrderProduct.ID).Count();
             }
             else //If there is already and ongoing order, the product is added to it. 
             {
@@ -167,6 +182,8 @@ namespace HakimsLivs.Pages
                 newOrderProduct.OrderID = currentOrder.ID;
                 database.OrderProducts.Add(newOrderProduct);
                 database.SaveChanges();
+
+                ItemsInOrder = database.OrderProducts.Where(op => op.OrderID == currentOrder.ID).Count();
             }
             return Page();
         }

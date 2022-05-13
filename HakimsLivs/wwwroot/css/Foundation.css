@@ -63,8 +63,7 @@ button {
 }
 
     button:hover {
-        background-color: rgba(245, 11, 11, 0.979);
-        color: white;
+        background-color: tomato;
     }
 
 .menuButton {
@@ -165,12 +164,18 @@ button {
 #bottom {
     background-color: tomato;
     position: relative;
-    bottom: 0px;
     height: 100px;
     width: 100%;
     display: flex;
     align-items: center;
     margin-top: 130px;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    padding-bottom: 10px;
+}
+
+.footerTable {
+    background-color: tomato;
 }
 
 @media (max-width: 780px) {

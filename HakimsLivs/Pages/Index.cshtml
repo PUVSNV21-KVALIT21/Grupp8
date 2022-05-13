@@ -23,7 +23,7 @@
             @*<input type="text" id="start" placeholder="Search" autofocus>*@
             <div id="menu">
                 @*<a class=menuButton href="/Login">Login</a>*@
-                <a class=menuButton href="/Orders">Varukorg</a>
+                <a class=menuButton href="/Orders">Varukorg ( @Html.DisplayFor(i => i.ItemsInOrder) )</a>
                 <a class=menuButton href="/Checkout">Checkout</a>
                 <a class=menuButton href="/Products">Admin</a>
 
@@ -86,7 +86,55 @@
                 </div>
             </div>
             <footer id="bottom">
-                <p>Hakim Livs info</p>
+                <table class="footerTable">
+                    <tbody>
+                        <tr>
+                            <td class="footerTable">
+                                <b class="footerTable">Kontakt:</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="footerTable">
+                                <b class="footerTable">Tel</b> +46 (0)70 123 45 67
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="footerTable">
+                                <b class="footerTable">Adress</b> Hakimgatan 10
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="footerTable">
+                                123 45 HAKIMSTAD
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table class="footerTable">
+                    <tbody>
+                        <tr>
+                            <td class="footerTable">
+                                <b class="footerTable">Öppetider:</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="footerTable">
+                                <b class="footerTable">Mån-fre</b> 07:00 - 22:00
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="footerTable">
+                                <b class="footerTable">Lör-sön</b> 08:00 - 21:00
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="footerTable">
+                                <i class="footerTable"><b class="footerTable">Helgdagar</b> 10:00 - 16:00</i>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </footer>
         </div>
     </main>
