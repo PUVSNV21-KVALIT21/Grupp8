@@ -106,7 +106,8 @@ namespace HakimsLivs.Pages
             if (HttpContext.User.Identity.Name != null)
             {
                 var currentOrder = database.Orders.Where(o => o.User.UserName == HttpContext.User.Identity.Name).FirstOrDefault();
-                ItemsInOrder = database.OrderProducts.Where(op => op.OrderID == currentOrder.ID).Count();
+                try { ItemsInOrder = database.OrderProducts.Where(op => op.OrderID == currentOrder.ID).Count(); }
+                catch { }
             }
         }
 
