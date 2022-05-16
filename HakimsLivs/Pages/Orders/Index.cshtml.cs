@@ -26,6 +26,7 @@ namespace HakimsLivs.Pages.Orders
         public IList<Product> Products { get; set; }
         public List<OrderProduct> OrderProducts { get; set; }
         public Product Product { get; set; }
+        public decimal totalPrice { get; set; } = 0;
 
 
         public async Task<IActionResult> OnGetAsync()
@@ -54,6 +55,8 @@ namespace HakimsLivs.Pages.Orders
                 {
                     products.TotalItemPrice = products.Amount * products.PricePerItem;
                     ProductsInOrderList.Add(products);
+
+                    
                 }
                 else
                 {
@@ -68,13 +71,17 @@ namespace HakimsLivs.Pages.Orders
                 }
             }
             ProductsInOrderList = ProductsInOrderList.OrderBy(p => p.ProductName).ToList();
+            foreach (ProductsInOrder p in ProductsInOrderList)
+            {
+                totalPrice += p.PricePerItem * p.Amount;
+            }
             return Page();
         }
 
         public async Task<IActionResult> OnPostRemoveAsync()
         {
             var selectedProductID = int.Parse(Request.Form.Keys.First());
-            
+
             foreach (OrderProduct item in _context.OrderProducts)
             {
                 if (item.ProductID == selectedProductID)
@@ -90,17 +97,17 @@ namespace HakimsLivs.Pages.Orders
         {
             var username = HttpContext.User.Identity.Name;
             //var user = _context.Users.Where(u => u.UserName == username).FirstOrDefault();
-            
+
             var selectedProductID = int.Parse(Request.Form.Keys.First());
 
             Order = await _context.Orders.Where(o => o.OrderCompleted == false).Where(o => o.User.UserName == username).FirstOrDefaultAsync();
 
-           var newOrderProduct = new OrderProduct();
+            var newOrderProduct = new OrderProduct();
             newOrderProduct.ProductID = selectedProductID;
             newOrderProduct.OrderID = Order.ID;
             _context.OrderProducts.Add(newOrderProduct);
             _context.SaveChanges();
-            
+
             return Redirect("./Orders");
         }
 
