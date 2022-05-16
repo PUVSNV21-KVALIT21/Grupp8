@@ -25,12 +25,15 @@ namespace HakimsLivs.Pages.Checkout
 
         public List<Product> Products { get; set; }
         public Dictionary<Product, int> ProductAmount { get; set; } = new Dictionary<Product, int>();
+        public decimal amountTotal { get; set; }
+        public List<decimal> productTotal { get; set; }
+        public string username { get; set; }
 
         public Order Order { get; set; }
 
         public void OnGet()
         {
-            var username = HttpContext.User.Identity.Name;
+            username = HttpContext.User.Identity.Name;
             var user = _context.Users.Where(u => u.UserName == username).FirstOrDefault();
 
             Order = _context.Orders.Where(o => o.User.UserName == username).Where(o => o.OrderCompleted == false).FirstOrDefault();
@@ -42,6 +45,11 @@ namespace HakimsLivs.Pages.Checkout
             {
                 var amount = _context.OrderProducts.Where(op => op.OrderID == Order.ID).Where(op => op.ProductID == product.ID).Count();
                 ProductAmount.Add(product, amount);
+            }
+
+            foreach (var amount in ProductAmount)
+            {
+                amountTotal += amount.Key.Price * amount.Value;
             }
         }
     }

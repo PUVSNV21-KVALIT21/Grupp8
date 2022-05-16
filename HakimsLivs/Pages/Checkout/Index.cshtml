@@ -38,13 +38,7 @@
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <button class="buttonche" type="submit">+</button>
-                                                </td>
-                                                <td>
                                                     <b>@item.Value.ToString()</b>
-                                                </td>
-                                                <td>
-                                                    <button class="buttonche" type="submit">-</button>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -53,10 +47,17 @@
                                 </table>
                                         }
                      </div>
-                    <div id="sticky">
+                    <div id="sticky" style="width: 400px">
                         <h1>Receipt</h1>
-                        <p>Summa totalt: 1100kr</p>
-                        <p>Kund: kund</p>
+                        @foreach (var item in Model.ProductAmount)
+                        {
+                    <div style="padding-bottom: 5px">
+                        <p>@item.Key.Name</p>
+                        <p>Pris sammanlagt: @((item.Key.Price * item.Value).ToString()) kr</p>
+                    </div>
+                        }
+                            <p>Summa Totalt: @Model.amountTotal.ToString() kr</p>
+                            <p>E-Post: @Model.username</p>
                     </div>
                 </div>
 
@@ -67,7 +68,7 @@
                 </nav>
             </form>
             <footer id="bottom">
-                <button onclick="javascript:demoFromHTML();">Generate PDF</button>
+                <button onclick="javascript:demoFromHTML();">Betala</button>
             </footer>
     </body>
 
