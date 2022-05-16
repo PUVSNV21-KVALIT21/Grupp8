@@ -20,9 +20,18 @@ namespace HakimsLivs.Pages.Categories
         }
         public List<Microsoft.AspNetCore.Identity.IdentityUser> Customer { get; set; }
 
-        public void OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
-            Customer = database.Users.ToList();
+            var admin = database.Users.Where(user => user.UserName == "admin@hakimslivs.se").FirstOrDefault();
+            var username = HttpContext.User.Identity.Name;
+            if (admin.UserName != username)
+            {
+                return Redirect("./Identity/Account/AccessDenied?");
+            }
+
+            Customer = await database.Users.ToListAsync();
+
+            return Page();
         }
     }
 }

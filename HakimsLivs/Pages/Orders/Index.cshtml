@@ -41,12 +41,38 @@
                     @product.TotalItemPrice
                 </td>
                 <td>
-                    <a href="#decrease">-</a> / <a href="#increase">+</a>
+                    <form asp-page-handler="Increase" method="post">
+                        <button name="@product.ProductID" type="submit">+</button>
+                    </form>
+                    <form asp-page-handler="Decrease" method="post">
+                        <button name="@product.ProductID" type="submit">-</button>
+                    </form>
                 </td>
                 <td>
-                    <a href="#remove">Ta Bort</a>
+                    <form asp-page-handler="Remove" method="post">
+                        <button name="@product.ProductID" type="submit">Ta bort</button></form>
                 </td>
             </tr>
-        }
+         }
+        <tr>
+            <td></td>
+            <td></td>
+            <td>
+                Summa:
+            </td>
+            <td>
+                @Model.TotalPrice
+            </td>
 
+        </tr>
+        
+        </tbody>
 </table>
+
+<div>
+    @if (Model.ProductsInOrderList.Count > 0)
+     {
+        <p> _ </p>
+        <a class=menuButton href="/Checkout">Färdigställ köp och betala</a>
+     }
+</div>
