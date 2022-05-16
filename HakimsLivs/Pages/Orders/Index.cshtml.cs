@@ -74,17 +74,21 @@ namespace HakimsLivs.Pages.Orders
             return Page();
         }
 
-        public async Task<IActionResult> RemoveAsync(int productID)
+        public async Task<IActionResult> OnPostRemoveAsync()
         {
-            OrderProducts = await _context.OrderProducts.Where(o => o.ProductID == productID).ToListAsync();
 
-            foreach (var orderProduct in OrderProducts)
+            var selectedProductID = int.Parse(Request.Form.Keys.First());
+            
+            foreach (OrderProduct item in _context.OrderProducts)
             {
-               _context.OrderProducts.Remove(orderProduct);
+                if (item.ProductID == selectedProductID)
+                {
+                    _context.OrderProducts.Remove(item);
+                }
             }
 
             await _context.SaveChangesAsync();
-            return Page();
+            return RedirectToPage("/Orders/Index");
         }
     }
 
