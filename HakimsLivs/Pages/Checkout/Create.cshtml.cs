@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using HakimsLivs.Data;
 using HakimsLivs.Models;
 
-namespace HakimsLivs.Pages.Orders
+namespace HakimsLivs.Pages.Checkout
 {
     public class CreateModel : PageModel
     {
@@ -21,12 +21,11 @@ namespace HakimsLivs.Pages.Orders
 
         public IActionResult OnGet()
         {
-        ViewData["UserID"] = new SelectList(_context.Users, "Id", "Id");
             return Page();
         }
 
         [BindProperty]
-        public Order Order { get; set; }
+        public OrderProduct OrderProduct { get; set; }
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
@@ -36,7 +35,7 @@ namespace HakimsLivs.Pages.Orders
                 return Page();
             }
 
-            _context.Orders.Add(Order);
+            _context.OrderProducts.Add(OrderProduct);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

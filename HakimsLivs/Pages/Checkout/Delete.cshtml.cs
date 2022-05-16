@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using HakimsLivs.Data;
 using HakimsLivs.Models;
 
-namespace HakimsLivs.Pages.Orders
+namespace HakimsLivs.Pages.Checkout
 {
     public class DeleteModel : PageModel
     {
@@ -20,7 +20,7 @@ namespace HakimsLivs.Pages.Orders
         }
 
         [BindProperty]
-        public Order Order { get; set; }
+        public OrderProduct OrderProduct { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -29,10 +29,9 @@ namespace HakimsLivs.Pages.Orders
                 return NotFound();
             }
 
-            Order = await _context.Orders
-                .Include(o => o.User).FirstOrDefaultAsync(m => m.ID == id);
+            OrderProduct = await _context.OrderProducts.FirstOrDefaultAsync(m => m.ID == id);
 
-            if (Order == null)
+            if (OrderProduct == null)
             {
                 return NotFound();
             }
@@ -46,11 +45,11 @@ namespace HakimsLivs.Pages.Orders
                 return NotFound();
             }
 
-            Order = await _context.Orders.FindAsync(id);
+            OrderProduct = await _context.OrderProducts.FindAsync(id);
 
-            if (Order != null)
+            if (OrderProduct != null)
             {
-                _context.Orders.Remove(Order);
+                _context.OrderProducts.Remove(OrderProduct);
                 await _context.SaveChangesAsync();
             }
 

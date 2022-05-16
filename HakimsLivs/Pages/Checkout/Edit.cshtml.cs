@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using HakimsLivs.Data;
 using HakimsLivs.Models;
 
-namespace HakimsLivs.Pages.Orders
+namespace HakimsLivs.Pages.Checkout
 {
     public class EditModel : PageModel
     {
@@ -21,7 +21,7 @@ namespace HakimsLivs.Pages.Orders
         }
 
         [BindProperty]
-        public Order Order { get; set; }
+        public OrderProduct OrderProduct { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -30,14 +30,12 @@ namespace HakimsLivs.Pages.Orders
                 return NotFound();
             }
 
-            Order = await _context.Orders
-                .Include(o => o.User).FirstOrDefaultAsync(m => m.ID == id);
+            OrderProduct = await _context.OrderProducts.FirstOrDefaultAsync(m => m.ID == id);
 
-            if (Order == null)
+            if (OrderProduct == null)
             {
                 return NotFound();
             }
-           ViewData["UserID"] = new SelectList(_context.Users, "Id", "Id");
             return Page();
         }
 
@@ -50,7 +48,7 @@ namespace HakimsLivs.Pages.Orders
                 return Page();
             }
 
-            _context.Attach(Order).State = EntityState.Modified;
+            _context.Attach(OrderProduct).State = EntityState.Modified;
 
             try
             {
@@ -58,7 +56,7 @@ namespace HakimsLivs.Pages.Orders
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!OrderExists(Order.ID))
+                if (!OrderProductExists(OrderProduct.ID))
                 {
                     return NotFound();
                 }
@@ -71,9 +69,9 @@ namespace HakimsLivs.Pages.Orders
             return RedirectToPage("./Index");
         }
 
-        private bool OrderExists(int id)
+        private bool OrderProductExists(int id)
         {
-            return _context.Orders.Any(e => e.ID == id);
+            return _context.OrderProducts.Any(e => e.ID == id);
         }
     }
 }

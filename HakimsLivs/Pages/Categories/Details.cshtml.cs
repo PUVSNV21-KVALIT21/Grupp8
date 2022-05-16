@@ -12,29 +12,17 @@ namespace HakimsLivs.Pages.Categories
 {
     public class DetailsModel : PageModel
     {
-        private readonly HakimsLivs.Data.ApplicationDbContext _context;
+        private ApplicationDbContext database;
 
-        public DetailsModel(HakimsLivs.Data.ApplicationDbContext context)
+        public DetailsModel(HakimsLivs.Data.ApplicationDbContext database)
         {
-            _context = context;
+            this.database = database;
         }
+        public List<Microsoft.AspNetCore.Identity.IdentityUser> Customer { get; set; }
 
-        public Category Category { get; set; }
-
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public void OnGet()
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            Category = await _context.Categories.FirstOrDefaultAsync(m => m.ID == id);
-
-            if (Category == null)
-            {
-                return NotFound();
-            }
-            return Page();
+            Customer = database.Users.ToList();
         }
     }
 }

@@ -4,14 +4,16 @@ using HakimsLivs.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HakimsLivs.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220512094629_Upd Order Class")]
+    partial class UpdOrderClass
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -60,24 +62,6 @@ namespace HakimsLivs.Data.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("HakimsLivs.Models.OrderProduct", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("OrderID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductID")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("OrderProducts");
-                });
-
             modelBuilder.Entity("HakimsLivs.Models.Product", b =>
                 {
                     b.Property<int>("ID")
@@ -99,6 +83,9 @@ namespace HakimsLivs.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<int?>("OrderID")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(6,2)");
 
@@ -111,6 +98,8 @@ namespace HakimsLivs.Data.Migrations
                     b.HasKey("ID");
 
                     b.HasIndex("CategoryID");
+
+                    b.HasIndex("OrderID");
 
                     b.ToTable("Products");
                 });
@@ -334,6 +323,10 @@ namespace HakimsLivs.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("HakimsLivs.Models.Order", null)
+                        .WithMany("Products")
+                        .HasForeignKey("OrderID");
+
                     b.Navigation("Category");
                 });
 
@@ -386,6 +379,11 @@ namespace HakimsLivs.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("HakimsLivs.Models.Order", b =>
+                {
+                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }
