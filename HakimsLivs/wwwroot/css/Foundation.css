@@ -121,6 +121,17 @@ button {
     margin-top: 25px;
 }
 
+#sticky2 {
+    background-color: darkseagreen;
+    display: block;
+    flex-direction: column;
+    width: 290px;
+    top: 0px;
+    position: -webkit-sticky;
+    position: sticky;
+    margin-top: 25px;
+}
+
 #categorybutton {
     width: 100%; 
     overflow: hidden;   

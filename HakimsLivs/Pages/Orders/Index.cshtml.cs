@@ -39,7 +39,7 @@ namespace HakimsLivs.Pages.Orders
             Order = await _context.Orders.Where(o => o.OrderCompleted == false).Where(o => o.User == user).FirstOrDefaultAsync();
 
             // Getting all the products linked to the order.
-            OrderProducts = await _context.OrderProducts.Where(o => o.OrderID == Order.ID).ToListAsync();
+            try { OrderProducts = await _context.OrderProducts.Where(o => o.OrderID == Order.ID).ToListAsync(); 
 
 
             foreach (var product in OrderProducts)
@@ -83,6 +83,8 @@ namespace HakimsLivs.Pages.Orders
             {
                 TotalPrice += p.PricePerItem * p.Amount;
             }
+            }
+            catch { }
             return Page();
         }
 

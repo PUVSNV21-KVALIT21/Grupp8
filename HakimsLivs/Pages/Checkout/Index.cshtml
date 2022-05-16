@@ -6,85 +6,91 @@
 }
 
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Hakims Livs</title>
-        <link rel="stylesheet" href="Foundation.css">
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hakims Livs</title>
+    <link rel="stylesheet" href="Foundation.css">
+</head>
+
 
     <body>
-            <form>
-                <div id="middle">
-                    <div id="base" style="display:block; background-color: darkseagreen">
-                                        @foreach (var item in Model.ProductAmount)
-                                        {
-                                <table>
-                                    <tbody>
-                                            <tr>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <b>@item.Key.Name</b>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                @if (!(item.Key.Weight == null) && !(item.Key.Volume == null))
-                                                {
-                                                    <td>
-                                                        <b>Vikt:</b> @Html.DisplayFor(modelItem => item.Key.Weight) gram | <b>Volym</b> @Html.DisplayFor(modelItem => item.Key.Volume) ml
-                                                    </td>
-                                                }
-                                                @if (item.Key.Volume == null)
-                                                {
-                                                    <td>
-                                                        <b>Vikt:</b> @Html.DisplayFor(modelItem => item.Key.Weight) gram
-                                                    </td>
-                                                }
-                                                @if (item.Key.Weight == null)
-                                                {
-                                                    <td>
-                                                        <b>Volym:</b> @Html.DisplayFor(modelItem => item.Key.Volume) ml
-                                                    </td>
-                                                }
-                                                <td>
-                                                    <b>Pris: @item.Key.Price kr</b>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <b>Mängd: @item.Value.ToString() st</b>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                            </tr>
-                                    </tbody>
-                                </table>
-                                        }
-                     </div>
-                    <div id="sticky" style="width: 400px">
-                        <h1>Receipt</h1>
-                        @foreach (var item in Model.ProductAmount)
-                        {
-                    <div style="padding-bottom: 5px">
-                        <p>@item.Key.Name</p>
-                        <p>Pris sammanlagt: @((item.Key.Price * item.Value).ToString()) kr</p>
-                    </div>
-                        }
-                            <p>Summa Totalt: @Model.amountTotal.ToString() kr</p>
-                            <p>E-Post: @Model.username</p>
-                    </div>
+        <form>
+            <div id="middle">
+                @*<div id="base" style="display:block; background-color: darkseagreen">
+                    @foreach (var item in Model.ProductAmount)
+                    {
+                        <table>
+                            <tbody>
+                                <tr>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <b>@item.Key.Name</b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    @if (!(item.Key.Weight == null) && !(item.Key.Volume == null))
+                                    {
+                                        <td>
+                                            <b>Vikt:</b> @Html.DisplayFor(modelItem => item.Key.Weight) gram | <b>Volym</b> @Html.DisplayFor(modelItem => item.Key.Volume) ml
+                                        </td>
+                                    }
+                                    @if (item.Key.Volume == null)
+                                    {
+                                        <td>
+                                            <b>Vikt:</b> @Html.DisplayFor(modelItem => item.Key.Weight) gram
+                                        </td>
+                                    }
+                                    @if (item.Key.Weight == null)
+                                    {
+                                        <td>
+                                            <b>Volym:</b> @Html.DisplayFor(modelItem => item.Key.Volume) ml
+                                        </td>
+                                    }
+                                    <td>
+                                        <b>Pris: @item.Key.Price kr</b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <b>Mängd: @item.Value.ToString() st</b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                </tr>
+                            </tbody>
+                        </table>
+                    }
+                </div>*@
+                <div id="sticky2" style="width: 400px">
+                    <h1>Kvitto</h1>
+                    <h3>Email : @Model.username</h3>
+                    @foreach (var item in Model.ProductAmount)
+                    {
+                <div style="padding-bottom: 5px">
+                    <p><u>@item.Key.Name</u></p>
+                    <p>Á pris: @((item.Key.Price).ToString()) kr</p>
+                    <p>Antal:@item.Value.ToString() </p>
+                    <p>Pris sammanlagt: @((item.Key.Price * item.Value).ToString()) kr</p>
+                    <p> .  .  .</p>
                 </div>
+                    }
+                    <p><b>Summa Totalt: @Model.amountTotal.ToString() kr</b></p>
+                </div>
+            </div>
 
-                <nav id="top">
-                    <a id="title" href="/Index">
-                        <img src="~/css/HakimsLivsLogo.jpg" height="80" , width="140" />
-                    </a>
-                </nav>
-            </form>
-            <footer id="bottom">
-                <button onclick="javascript:demoFromHTML();">Betala</button>
-            </footer>
+            @*<nav id="top">
+                <a id="title" href="/Index">
+                    <img src="~/css/HakimsLivsLogo.jpg" height="80" , width="140" />
+                </a>
+            </nav>*@
+        </form>
+        <footer id="bottom">
+            @*<form asp-page-handler="Complete" method="post">*@
+                <button @*name="@Model.Order.ID"*@ onclick="javascript:demoFromHTML();">Ladda ned kvitto</button>
+            @*</form>*@
+        </footer>
     </body>
 
 

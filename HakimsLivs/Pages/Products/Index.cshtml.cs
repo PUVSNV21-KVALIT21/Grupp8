@@ -32,7 +32,7 @@ namespace HakimsLivs.Pages.Products
             var username = HttpContext.User.Identity.Name;
             if (admin.UserName != username)
             {
-                return Redirect("/");
+                return Redirect("./Identity/Account/AccessDenied?");
             }
 
             Product = await _context.Products.ToListAsync();
