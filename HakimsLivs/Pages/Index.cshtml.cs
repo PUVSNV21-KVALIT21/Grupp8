@@ -186,7 +186,7 @@ namespace HakimsLivs.Pages
 
                 ItemsInOrder = database.OrderProducts.Where(op => op.OrderID == currentOrder.ID).Count();
             }
-            return Page();
+            return Redirect("./Index");
         }
     }
 }
