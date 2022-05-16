@@ -83,7 +83,9 @@
                 </nav>
             </form>
             <footer id="bottom">
-                <button onclick="javascript:demoFromHTML();">Betala</button>
+                <form asp-page-handler="Complete" method="post">
+                    <button name="@Model.Order.ID" onclick="javascript:demoFromHTML();">Betala</button>
+                </form>
             </footer>
     </body>
 

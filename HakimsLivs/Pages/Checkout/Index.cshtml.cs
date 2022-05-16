@@ -52,5 +52,14 @@ namespace HakimsLivs.Pages.Checkout
                 amountTotal += amount.Key.Price * amount.Value;
             }
         }
+
+        public async Task<IActionResult> OnPostCompleteAsync()
+        {
+            var currentOrderID = int.Parse(Request.Form.Keys.FirstOrDefault());
+            var currentOrder = _context.Orders.Where(o => o.ID == currentOrderID).FirstOrDefault();
+            currentOrder.OrderCompleted = true;
+            _context.SaveChangesAsync();
+            return Page();
+        }
     }
 }
