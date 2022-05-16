@@ -44,7 +44,8 @@
                     <a href="#decrease">-</a> / <a href="#increase">+</a>
                 </td>
                 <td>
-                    <a href="#remove">Ta Bort</a>
+                    <form asp-page-handler="Remove" method="post">
+                        <button name="@product.ProductID" type="submit">Ta bort</button></form>
                 </td>
             </tr>
         }
