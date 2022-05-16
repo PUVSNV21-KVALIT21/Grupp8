@@ -29,16 +29,31 @@
                                                 </td>
                                             </tr>
                                             <tr>
+                                                @if (!(item.Key.Weight == null) && !(item.Key.Volume == null))
+                                                {
+                                                    <td>
+                                                        <b>Vikt:</b> @Html.DisplayFor(modelItem => item.Key.Weight) gram | <b>Volym</b> @Html.DisplayFor(modelItem => item.Key.Volume) ml
+                                                    </td>
+                                                }
+                                                @if (item.Key.Volume == null)
+                                                {
+                                                    <td>
+                                                        <b>Vikt:</b> @Html.DisplayFor(modelItem => item.Key.Weight) gram
+                                                    </td>
+                                                }
+                                                @if (item.Key.Weight == null)
+                                                {
+                                                    <td>
+                                                        <b>Volym:</b> @Html.DisplayFor(modelItem => item.Key.Volume) ml
+                                                    </td>
+                                                }
                                                 <td>
-                                                    <b>@item.Key.Weight</b>
-                                                </td>
-                                                <td>
-                                                    <b>@item.Key.Price</b>
+                                                    <b>Pris: @item.Key.Price kr</b>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <b>@item.Value.ToString()</b>
+                                                    <b>Mängd: @item.Value.ToString() st</b>
                                                 </td>
                                             </tr>
                                             <tr>
