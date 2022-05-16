@@ -41,7 +41,13 @@
                     @product.TotalItemPrice
                 </td>
                 <td>
-                    <a href="#decrease">-</a> / <a href="#increase">+</a>
+                    @*<a href="#decrease">-</a> / <a href="#increase">+</a>*@
+                    <form asp-page-handler="Increase" method="post">
+                        <button name="@product.ProductID" type="submit">+</button>
+                    </form>
+                    <form asp-page-handler="Decrease" method="post">
+                        <button name="@product.ProductID" type="submit">-</button>
+                    </form>
                 </td>
                 <td>
                     <a href="#remove">Ta Bort</a>
