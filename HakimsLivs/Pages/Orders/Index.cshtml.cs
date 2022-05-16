@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using HakimsLivs.Data;
 using HakimsLivs.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HakimsLivs.Pages.Orders
 {
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly HakimsLivs.Data.ApplicationDbContext _context;
@@ -29,12 +31,6 @@ namespace HakimsLivs.Pages.Orders
         public async Task<IActionResult> OnGetAsync()
         {
             var username = HttpContext.User.Identity.Name;
-
-            if (username == null)
-            {
-                return Redirect("./Identity/Account/Login?ReturnUrl=%2FProducts");
-            }
-
             var user = _context.Users.Where(u => u.UserName == username).FirstOrDefault();
 
             Order = await _context.Orders.Where(o => o.OrderCompleted == false).Where(o => o.User == user).FirstOrDefaultAsync();
@@ -71,12 +67,12 @@ namespace HakimsLivs.Pages.Orders
                     ProductsInOrderList.Add(productToChange);
                 }
             }
+            ProductsInOrderList = ProductsInOrderList.OrderBy(p => p.ProductName).ToList();
             return Page();
         }
 
         public async Task<IActionResult> OnPostRemoveAsync()
         {
-
             var selectedProductID = int.Parse(Request.Form.Keys.First());
             
             foreach (OrderProduct item in _context.OrderProducts)
@@ -86,9 +82,42 @@ namespace HakimsLivs.Pages.Orders
                     _context.OrderProducts.Remove(item);
                 }
             }
-
             await _context.SaveChangesAsync();
-            return RedirectToPage("/Orders/Index");
+            return Redirect("./Orders");
+        }
+
+        public async Task<IActionResult> OnPostIncreaseAsync()
+        {
+            var username = HttpContext.User.Identity.Name;
+            //var user = _context.Users.Where(u => u.UserName == username).FirstOrDefault();
+            
+            var selectedProductID = int.Parse(Request.Form.Keys.First());
+
+            Order = await _context.Orders.Where(o => o.OrderCompleted == false).Where(o => o.User.UserName == username).FirstOrDefaultAsync();
+
+           var newOrderProduct = new OrderProduct();
+            newOrderProduct.ProductID = selectedProductID;
+            newOrderProduct.OrderID = Order.ID;
+            _context.OrderProducts.Add(newOrderProduct);
+            _context.SaveChanges();
+            
+            return Redirect("./Orders");
+        }
+
+        public async Task<IActionResult> OnPostDecreaseAsync()
+        {
+            var username = HttpContext.User.Identity.Name;
+            //var user = _context.Users.Where(u => u.UserName == username).FirstOrDefault();
+
+            var selectedProductID = int.Parse(Request.Form.Keys.First());
+
+            Order = await _context.Orders.Where(o => o.OrderCompleted == false).Where(o => o.User.UserName == username).FirstOrDefaultAsync();
+
+            var orderProductdecrease = _context.OrderProducts.Where(op => op.ProductID == selectedProductID).Where(op => op.OrderID == Order.ID).FirstOrDefault();
+            _context.OrderProducts.Remove(orderProductdecrease);
+            _context.SaveChanges();
+
+            return Redirect("./Orders");
         }
     }
 
