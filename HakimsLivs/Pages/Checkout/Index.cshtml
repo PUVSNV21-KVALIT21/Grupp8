@@ -17,7 +17,7 @@
             <form>
                 <div id="middle">
                     <div id="base" style="display:block; background-color: darkseagreen">
-                                        @for (int i = 0; i < 20; i++)
+                                        @foreach (var item in Model.ProductAmount)
                                         {
                                 <table>
                                     <tbody>
@@ -25,15 +25,15 @@
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <b>Havregryn</b>
+                                                    <b>@item.Key.Name</b>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <b>Vikt: 750g</b>
+                                                    <b>@item.Key.Weight</b>
                                                 </td>
                                                 <td>
-                                                    <b>Pris: 100kr</b>
+                                                    <b>@item.Key.Price</b>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -41,7 +41,7 @@
                                                     <button class="buttonche" type="submit">+</button>
                                                 </td>
                                                 <td>
-                                                    <b>Antal: 10</b>
+                                                    <b>@item.Value.ToString()</b>
                                                 </td>
                                                 <td>
                                                     <button class="buttonche" type="submit">-</button>
