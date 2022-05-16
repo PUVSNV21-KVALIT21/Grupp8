@@ -26,38 +26,44 @@ namespace HakimsLivs.Pages.Orders
         public IList<Product> Products { get; set; }
         public List<OrderProduct> OrderProducts { get; set; }
         public Product Product { get; set; }
-        public decimal totalPrice { get; set; } = 0;
+        public decimal TotalPrice { get; set; } = 0;
 
 
         public async Task<IActionResult> OnGetAsync()
         {
+            // Getting the user that owns the cart
             var username = HttpContext.User.Identity.Name;
             var user = _context.Users.Where(u => u.UserName == username).FirstOrDefault();
 
+            // Getting the current active order for the user
             Order = await _context.Orders.Where(o => o.OrderCompleted == false).Where(o => o.User == user).FirstOrDefaultAsync();
 
+            // Getting all the products linked to the order.
             OrderProducts = await _context.OrderProducts.Where(o => o.OrderID == Order.ID).ToListAsync();
+
 
             foreach (var product in OrderProducts)
             {
                 ProductsInOrder products = new ProductsInOrder();
 
+                // Setting some variables used in displaying the cart to the user
                 int productID = product.ProductID;
                 Product = await _context.Products.Where(o => o.ID == productID).FirstOrDefaultAsync();
                 int amount = 1;
 
+                // Putting all the data needed into the cart list
                 products.ProductName = Product.Name;
                 products.ProductID = Product.ID;
                 products.Amount = amount;
                 products.PricePerItem = Product.Price;
 
+                // If the product is not already in the cart it will be added
                 if (!ProductsInOrderList.Any(item => item.ProductID == productID))
                 {
                     products.TotalItemPrice = products.Amount * products.PricePerItem;
                     ProductsInOrderList.Add(products);
-
-                    
                 }
+                // If the product already exists the amount in the cart will be increased
                 else
                 {
                     ProductsInOrder productToChange = ProductsInOrderList.Where(p => p.ProductID == productID).FirstOrDefault();
@@ -71,9 +77,11 @@ namespace HakimsLivs.Pages.Orders
                 }
             }
             ProductsInOrderList = ProductsInOrderList.OrderBy(p => p.ProductName).ToList();
+
+            // Genereating the total price for the entire cart
             foreach (ProductsInOrder p in ProductsInOrderList)
             {
-                totalPrice += p.PricePerItem * p.Amount;
+                TotalPrice += p.PricePerItem * p.Amount;
             }
             return Page();
         }
@@ -82,6 +90,7 @@ namespace HakimsLivs.Pages.Orders
         {
             var selectedProductID = int.Parse(Request.Form.Keys.First());
 
+            // Looping through the table in db to remove everey line containing the product chosen
             foreach (OrderProduct item in _context.OrderProducts)
             {
                 if (item.ProductID == selectedProductID)
@@ -96,12 +105,13 @@ namespace HakimsLivs.Pages.Orders
         public async Task<IActionResult> OnPostIncreaseAsync()
         {
             var username = HttpContext.User.Identity.Name;
-            //var user = _context.Users.Where(u => u.UserName == username).FirstOrDefault();
 
             var selectedProductID = int.Parse(Request.Form.Keys.First());
 
+            // Finding the first line in the table where the chosen product is
             Order = await _context.Orders.Where(o => o.OrderCompleted == false).Where(o => o.User.UserName == username).FirstOrDefaultAsync();
 
+            //Creating a new object of the chosen product and adding it to the database
             var newOrderProduct = new OrderProduct();
             newOrderProduct.ProductID = selectedProductID;
             newOrderProduct.OrderID = Order.ID;
@@ -114,12 +124,13 @@ namespace HakimsLivs.Pages.Orders
         public async Task<IActionResult> OnPostDecreaseAsync()
         {
             var username = HttpContext.User.Identity.Name;
-            //var user = _context.Users.Where(u => u.UserName == username).FirstOrDefault();
 
             var selectedProductID = int.Parse(Request.Form.Keys.First());
 
+            // Finding the first line in the table where the cosen product is
             Order = await _context.Orders.Where(o => o.OrderCompleted == false).Where(o => o.User.UserName == username).FirstOrDefaultAsync();
 
+            // Removing the line containg the chosen product from the db
             var orderProductdecrease = _context.OrderProducts.Where(op => op.ProductID == selectedProductID).Where(op => op.OrderID == Order.ID).FirstOrDefault();
             _context.OrderProducts.Remove(orderProductdecrease);
             _context.SaveChanges();
@@ -128,6 +139,7 @@ namespace HakimsLivs.Pages.Orders
         }
     }
 
+    // The class for handling the objects in the cart
     public class ProductsInOrder
     {
         public int ProductID { get; set; }
