@@ -24,7 +24,9 @@
             <div id="menu">
                 @*<a class=menuButton href="/Login">Login</a>*@
                 <a class=menuButton href="/Orders">Varukorg ( @Html.DisplayFor(i => i.ItemsInOrder) )</a>
+                @if(Model.admin == true) {
                 <a class=menuButton href="/Products">Admin</a>
+                }
 
             </div>
             <div id="smallmenu">

@@ -23,9 +23,15 @@
 
 table{padding: 3px;}
 
+.tableOrder {
+    padding: 3px;
+    min-height: 150px;
+    min-width: 400px;
+}
+
 img{align-content:center;}
 
-td, b, tr {
+td, b, tr, u {
     background-color: cornsilk;
     color: black;
     max-width: 200px;

@@ -33,9 +33,15 @@ namespace HakimsLivs.Pages
         public Order Order { get; set; }
 
         public bool categoryIsSelected { get; set; } = false;
+        public bool admin { get; set; } = false;
 
         public void OnGet()
         {
+            if(HttpContext.User.Identity.Name == "admin@hakimslivs.se")
+            {
+                admin = true;
+            }
+
             #region If database is empty => products are loaded from CSV files
             var categorieExist = database.Categories.Any();
             var productsExist = database.Products.Any();
