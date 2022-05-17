@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using HakimsLivs.Data;
 using HakimsLivs.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HakimsLivs.Pages.Orders
 {
+    [Authorize]
     public class DetailsModel : PageModel
     {
         private readonly HakimsLivs.Data.ApplicationDbContext _context;
@@ -19,23 +21,63 @@ namespace HakimsLivs.Pages.Orders
             _context = context;
         }
 
-        public Order Order { get; set; }
+        public List<Order> orderList { get; set; } = new List<Order>();
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public List<OrderUserProduct> orderUserProductList { get; set; } = new List<OrderUserProduct>();
+
+
+        public async Task<IActionResult> OnGetAsync()
         {
-            if (id == null)
+            var admin = _context.Users.Where(user => user.UserName == "admin@hakimslivs.se").FirstOrDefault();
+            var currentUser = HttpContext.User.Identity.Name;
+            if (admin.UserName != currentUser)
             {
-                return NotFound();
+                return Redirect("./Identity/Account/AccessDenied?");
             }
 
-            Order = await _context.Orders
-                .Include(o => o.User).FirstOrDefaultAsync(m => m.ID == id);
+            orderList = await _context.Orders.Include(u => u.User).Where(o => o.OrderCompleted == true).OrderBy(o => o.OrderDate).ToListAsync();
 
-            if (Order == null)
+            foreach( var order in orderList)
             {
-                return NotFound();
+                var productIDList = await _context.OrderProducts.Where(op => op.OrderID == order.ID).Select(op => op.ProductID).ToListAsync();
+                var productList =  _context.Products.Where(p => productIDList.Contains(p.ID)).ToList();
+                var username = await _context.Users.Where(u => u.Id == order.UserID).Select(u => u.UserName).FirstOrDefaultAsync();
+                var productAmountList = new List<ProductAmount>();
+
+                foreach(var product in productList)
+                {
+                    var amount = _context.OrderProducts.Where(op => op.OrderID == order.ID).Where(op => op.ProductID == product.ID).Count();
+
+                    ProductAmount productAmount = new ProductAmount();
+                    productAmount.Product = product;
+                    productAmount.Amount = amount;
+                    productAmount.TotalPrice = amount * product.Price;
+                    productAmountList.Add(productAmount);
+                }
+
+                OrderUserProduct orderUserProduct = new OrderUserProduct();
+                orderUserProduct.Order = order;
+                orderUserProduct.Username = username;
+                orderUserProduct.ProductList = productAmountList;
+                orderUserProductList.Add(orderUserProduct);
+
             }
             return Page();
         }
+
+    }
+    public class ProductAmount
+    {
+        public Product Product { get; set; }
+        public int Amount { get; set; }
+        public decimal TotalPrice { get; set; }
+
+    }
+
+    public class OrderUserProduct
+    {
+        public Order Order { get; set; }
+        public string Username { get; set; }
+        public List<ProductAmount> ProductList { get; set; } = new List<ProductAmount>();
     }
 }
