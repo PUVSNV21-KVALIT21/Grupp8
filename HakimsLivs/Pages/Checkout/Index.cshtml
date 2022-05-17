@@ -63,7 +63,7 @@
                         </table>
                     }
                 </div>*@
-                <div id="sticky2" style="width: 400px">
+                <div id="receipt" style="width: 400px">
                     <h1>Kvitto</h1>
                     <h3>Email : @Model.username</h3>
                     @foreach (var item in Model.ProductAmount)
@@ -102,7 +102,7 @@
             var pdf = new jsPDF('p', 'pt', 'letter');
             // source can be HTML-formatted string, or a reference
             // to an actual DOM element from which the text will be scraped.
-            source = $('#sticky')[0];
+            source = $('#receipt')[0];
 
             // we support special element handlers. Register them with jQuery-style
             // ID selector for either ID or node name. ("#iAmID", "div", "span" etc.)
