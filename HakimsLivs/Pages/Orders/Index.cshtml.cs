@@ -41,7 +41,6 @@ namespace HakimsLivs.Pages.Orders
             // Getting all the products linked to the order.
             try { OrderProducts = await _context.OrderProducts.Where(o => o.OrderID == Order.ID).ToListAsync(); 
 
-
             foreach (var product in OrderProducts)
             {
                 ProductsInOrder products = new ProductsInOrder();
@@ -132,10 +131,15 @@ namespace HakimsLivs.Pages.Orders
             // Finding the first line in the table where the cosen product is
             Order = await _context.Orders.Where(o => o.OrderCompleted == false).Where(o => o.User.UserName == username).FirstOrDefaultAsync();
 
-            // Removing the line containg the chosen product from the db
-            var orderProductdecrease = _context.OrderProducts.Where(op => op.ProductID == selectedProductID).Where(op => op.OrderID == Order.ID).FirstOrDefault();
-            _context.OrderProducts.Remove(orderProductdecrease);
-            _context.SaveChanges();
+            OrderProducts = await _context.OrderProducts.Where(o => o.OrderID == Order.ID).Where(o => o.ProductID == selectedProductID).ToListAsync();
+
+            if (OrderProducts.Count > 1)
+            {
+                // Removing the line containg the chosen product from the db
+                var orderProductdecrease = _context.OrderProducts.Where(op => op.ProductID == selectedProductID).Where(op => op.OrderID == Order.ID).FirstOrDefault();
+                _context.OrderProducts.Remove(orderProductdecrease);
+                _context.SaveChanges();
+            }         
 
             return Redirect("./Orders");
         }
@@ -150,5 +154,4 @@ namespace HakimsLivs.Pages.Orders
         public decimal PricePerItem { get; set; }
         public decimal TotalItemPrice { get; set; }
     }
-
 }
