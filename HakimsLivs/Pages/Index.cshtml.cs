@@ -135,14 +135,18 @@ namespace HakimsLivs.Pages
 
             if (HttpContext.User.Identity.Name != null)
             {
-                var currentOrder = database.Orders.Where(o => o.User.UserName == HttpContext.User.Identity.Name).Where(o => o.OrderCompleted == false).FirstOrDefault();
-                ItemsInOrder = database.OrderProducts.Where(op => op.OrderID == currentOrder.ID).Count();
+                try
+                {
+                    var currentOrder = database.Orders.Where(o => o.User.UserName == HttpContext.User.Identity.Name).Where(o => o.OrderCompleted == false).FirstOrDefault();
+                    ItemsInOrder = database.OrderProducts.Where(op => op.OrderID == currentOrder.ID).Count();
+                }
+                catch { }
             }
 
             Page();
         }
         
-        public async Task<IActionResult> OnPostView()
+        public async Task<IActionResult> OnPostViewAsync()
         {
             #region //categoriesInProduct & ProductList needs to be defined when page reloads
             var Categories = database.Products.Where(p => p.Inventory > 0).Select(p => p.Category).AsEnumerable().GroupBy(c => c.Name).ToList();
