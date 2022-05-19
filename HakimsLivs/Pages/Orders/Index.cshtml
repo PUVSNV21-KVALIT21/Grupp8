@@ -7,72 +7,87 @@
 
 <h1>Varukorg</h1>
 
-@if (Model.ProductsInOrderList.Count > 0) { 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Artikel
-            </th>
-            <th>
-                Antal
-            </th>
-            <th>
-                Á-pris
-            </th>
-            <th>
-                Totalt
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var product in Model.ProductsInOrderList)
-        {
+@if (Model.ProductsInOrderList.Count > 0)
+{
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    @product.ProductName
-                </td>
-                <td>
-                    @product.Amount
-                </td>
-                <td>
-                    @product.PricePerItem
-                </td>
-                <td>
-                    @product.TotalItemPrice
-                </td>
-                <td>
-                    <form asp-page-handler="Increase" method="post">
-                        <button name="@product.ProductID" type="submit">+</button>
-                    </form>
-                    <form asp-page-handler="Decrease" method="post">
-                        <button name="@product.ProductID" type="submit">-</button>
-                    </form>
-                </td>
-                <td>
-                    <form asp-page-handler="Remove" method="post">
-                        <button name="@product.ProductID" type="submit">Ta bort</button></form>
-                </td>
+                <th>
+                    Artikel
+                </th>
+                <th>
+                    Antal
+                </th>
+                <th>
+                    Á-pris
+                </th>
+                <th>
+                    Totalt
+                </th>
             </tr>
-         }
-        <tr>
-            <td></td>
-            <td></td>
-            <td>
-                Summa:
-            </td>
-            <td>
-                @Model.TotalPrice
-            </td>
+        </thead>
+        <tbody>
+            @foreach (var product in Model.ProductsInOrderList)
+            {
+                <tr>
+                    <td>
+                        @product.ProductName
+                    </td>
+                    <td>
+                        @product.Amount
+                    </td>
+                    <td>
+                        @product.PricePerItem
+                    </td>
+                    <td>
+                        @product.TotalItemPrice
+                    </td>
+                    <td>
+                        <form asp-page-handler="Increase" method="post">
+                            <button name="@product.ProductID" type="submit">+</button>
+                        </form>
+                        <form asp-page-handler="Decrease" method="post">
+                            <button name="@product.ProductID" type="submit">-</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form asp-page-handler="Remove" method="post">
+                            <button onclick="javascript:Secure();" name="@product.ProductID" type="submit">Ta bort</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+            <tr>
+                <td></td>
+                <td></td>
+                <td>
+                    Summa:
+                </td>
+                <td>
+                    @Model.TotalPrice
+                </td>
 
-        </tr>
-        
+            </tr>
+
         </tbody>
-</table>
+    </table>
 
     <div>
         <p> _ </p>
         <a class=menuButton href="/Checkout">Färdigställ köp och betala</a>
-        
+
     </div>
 }
+
+@*@section Scripts
+    {
+    <script>
+    function Secure()
+    {
+    var confirmation = window.confirm("Are you sure?"); //confirmation variable will contain true/false.
+
+    if (confirmation) {  }
+    else { /* Write code for No */ }
+    }
+    </script>
+    }*@

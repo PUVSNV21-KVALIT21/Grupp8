@@ -63,20 +63,26 @@
                         </table>
                     }
                 </div>*@
-                <div id="sticky2" style="width: 400px">
-                    <h1>Kvitto</h1>
+                <div id="receipt" style="width: 500px">
+                    <h1>Beställningsbekräftelse</h1>
                     <h3>Email : @Model.username</h3>
+                    <h3>Ordernummer : @Model.Order.ID</h3>
+                    <p> .  .  .</p>
                     @foreach (var item in Model.ProductAmount)
                     {
-                <div style="padding-bottom: 5px">
-                    <p><u>@item.Key.Name</u></p>
-                    <p>Á pris: @((item.Key.Price).ToString()) kr</p>
-                    <p>Antal:@item.Value.ToString() </p>
-                    <p>Pris sammanlagt: @((item.Key.Price * item.Value).ToString()) kr</p>
-                    <p> .  .  .</p>
-                </div>
+                        <div style="padding-bottom: 5px">
+                            <p><u>@item.Key.Name</u></p>
+                            <p>Á pris: @((item.Key.Price).ToString()) kr</p>
+                            <p>Antal:@item.Value.ToString() </p>
+                            <p>Pris sammanlagt: @((item.Key.Price * item.Value).ToString()) kr</p>
+                            <p> .  .  .</p>
+                        </div>
                     }
                     <p><b>Summa Totalt: @Model.amountTotal.ToString() kr</b></p>
+                    <p> .  .  .</p>
+                    <p>Efter att du har gjort din order, avvakta leverans och betala senare.</p>
+                    <p><b>Swishnummer: 123 4567890</b></p>
+                    <p>Utlämningsställe</p>
                 </div>
             </div>
 
@@ -88,7 +94,7 @@
         </form>
         <footer id="bottom">
             @*<form asp-page-handler="Complete" method="post">*@
-                <button @*name="@Model.Order.ID"*@ onclick="javascript:demoFromHTML();">Ladda ned kvitto</button>
+                <button @*name="@Model.Order.ID"*@ onclick="javascript:demoFromHTML();">Ladda ned beställningsbekräftelse</button>
             @*</form>*@
         </footer>
     </body>
@@ -98,11 +104,13 @@
 {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
     <script>
-        function demoFromHTML() {
+        function demoFromHTML()
+        {
             var pdf = new jsPDF('p', 'pt', 'letter');
             // source can be HTML-formatted string, or a reference
             // to an actual DOM element from which the text will be scraped.
-            source = $('#sticky')[0];
+
+            source = $('#receipt')[0];
 
             // we support special element handlers. Register them with jQuery-style
             // ID selector for either ID or node name. ("#iAmID", "div", "span" etc.)
@@ -134,8 +142,11 @@
                 function (dispose) {
                     // dispose: object with X, Y of the last line add to the PDF
                     //          this allow the insertion of new lines after html
-                    pdf.save('Receipt.pdf');
+                    pdf.save('Beställningsbekräftelse.pdf');
                 }, margins);
+
+            alert('Beställningsbekräftelse mottagit');
         }
+  
     </script>
 }

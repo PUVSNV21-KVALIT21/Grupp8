@@ -33,9 +33,15 @@ namespace HakimsLivs.Pages
         public Order Order { get; set; }
 
         public bool categoryIsSelected { get; set; } = false;
+        public bool admin { get; set; } = false;
 
         public void OnGet()
         {
+            if(HttpContext.User.Identity.Name == "admin@hakimslivs.se")
+            {
+                admin = true;
+            }
+
             #region If database is empty => products are loaded from CSV files
             var categorieExist = database.Categories.Any();
             var productsExist = database.Products.Any();
@@ -129,14 +135,18 @@ namespace HakimsLivs.Pages
 
             if (HttpContext.User.Identity.Name != null)
             {
-                var currentOrder = database.Orders.Where(o => o.User.UserName == HttpContext.User.Identity.Name).Where(o => o.OrderCompleted == false).FirstOrDefault();
-                ItemsInOrder = database.OrderProducts.Where(op => op.OrderID == currentOrder.ID).Count();
+                try
+                {
+                    var currentOrder = database.Orders.Where(o => o.User.UserName == HttpContext.User.Identity.Name).Where(o => o.OrderCompleted == false).FirstOrDefault();
+                    ItemsInOrder = database.OrderProducts.Where(op => op.OrderID == currentOrder.ID).Count();
+                }
+                catch { }
             }
 
             Page();
         }
         
-        public async Task<IActionResult> OnPostView()
+        public async Task<IActionResult> OnPostViewAsync()
         {
             #region //categoriesInProduct & ProductList needs to be defined when page reloads
             var Categories = database.Products.Where(p => p.Inventory > 0).Select(p => p.Category).AsEnumerable().GroupBy(c => c.Name).ToList();

@@ -10,7 +10,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="/js/main.js"></script>
-    <title>Hakims Livs</title>
+    <title>Hakim Livs</title>
     <link rel="stylesheet" href="Foundation.css">
 </head>
 
@@ -24,7 +24,9 @@
             <div id="menu">
                 @*<a class=menuButton href="/Login">Login</a>*@
                 <a class=menuButton href="/Orders">Varukorg ( @Html.DisplayFor(i => i.ItemsInOrder) )</a>
+                @if(Model.admin == true) {
                 <a class=menuButton href="/Products">Admin</a>
+                }
 
             </div>
             <div id="smallmenu">
@@ -49,7 +51,7 @@
                 <div id="base">
                     @foreach (var item in Model.ProductList)
                     {
-                        @if(item.Inventory != 0)
+                        @if(item.Inventory != 0 && !item.Archived)
                         { 
                         <div id="productfoundation">
                             <div id="toppro">

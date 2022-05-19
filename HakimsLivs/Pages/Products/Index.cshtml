@@ -16,6 +16,7 @@
     <a class="button" href="/Products">Produkter</a>
     <a class="button" href="/Categories">Kategorier</a>
     <a class="button" href="/Categories/Details">Kunder</a>
+    <a class="button" href="/Orders/Details">Ordrar</a>
 </nav>
 
 <h1>
@@ -35,8 +36,8 @@
                 <tr>
                     <td>
                         <img src=@Html.DisplayFor(modelItem => item.Image)
-                             width="200" ,
-                             height="133" />
+                         width="200" ,
+                         height="133" />
                     </td>
                 </tr>
                 <tr>
@@ -72,6 +73,19 @@
                 <tr>
                     <td>
                         <b>Lagersaldo:</b> @Html.DisplayFor(modelItem => item.Inventory)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @if (item.Archived)
+                        {
+                            <b style="color: red">Arkiverad</b>
+                        }
+                        else
+                        {
+                            <b>Arktiv</b>
+                        }
+
                     </td>
                 </tr>
                 <tr>
