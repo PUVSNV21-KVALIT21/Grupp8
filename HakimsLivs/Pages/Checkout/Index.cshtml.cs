@@ -41,7 +41,7 @@ namespace HakimsLivs.Pages.Checkout
             var productID = _context.OrderProducts.Where(op => op.OrderID == Order.ID).Select(op => op.ProductID);
             Products = _context.Products.Where(p => productID.Contains(p.ID)).ToList();
             
-            foreach (var product in Products)
+            foreach (var product in Products.Where(p => p.Archived == false))
             {
                 var amount = _context.OrderProducts.Where(op => op.OrderID == Order.ID).Where(op => op.ProductID == product.ID).Count();
                 ProductAmount.Add(product, amount);
