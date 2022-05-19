@@ -51,7 +51,7 @@
                 <div id="base">
                     @foreach (var item in Model.ProductList)
                     {
-                        @if(item.Inventory != 0)
+                        @if(item.Inventory != 0 && !item.Archived)
                         { 
                         <div id="productfoundation">
                             <div id="toppro">

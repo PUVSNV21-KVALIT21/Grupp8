@@ -36,8 +36,8 @@
                 <tr>
                     <td>
                         <img src=@Html.DisplayFor(modelItem => item.Image)
-                             width="200" ,
-                             height="133" />
+                         width="200" ,
+                         height="133" />
                     </td>
                 </tr>
                 <tr>
@@ -73,6 +73,19 @@
                 <tr>
                     <td>
                         <b>Lagersaldo:</b> @Html.DisplayFor(modelItem => item.Inventory)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @if (item.Archived)
+                        {
+                            <b style="color: red">Arkiverad</b>
+                        }
+                        else
+                        {
+                            <b>Arktiv</b>
+                        }
+
                     </td>
                 </tr>
                 <tr>
