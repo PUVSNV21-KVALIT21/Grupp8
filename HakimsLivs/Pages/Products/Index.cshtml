@@ -36,8 +36,8 @@
                 <tr>
                     <td>
                         <img src=@Html.DisplayFor(modelItem => item.Image)
-                             width="200" ,
-                             height="133" />
+                         width="200" ,
+                         height="133" />
                     </td>
                 </tr>
                 <tr>
@@ -77,9 +77,29 @@
                 </tr>
                 <tr>
                     <td>
+                        @if (item.Archived)
+                        {
+                            <b style="color: red">Arkiverad</b>
+                        }
+                        else
+                        {
+                            <b>Aktiv</b>
+                        }
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
                         <a asp-page="./Edit" asp-route-id="@item.ID">Editera</a> |
                         <a asp-page="./Details" asp-route-id="@item.ID">Detaljer</a> |
-                        <a asp-page="./Delete" asp-route-id="@item.ID">Radera</a>
+                        @if (item.Archived)
+                        {
+                            <a asp-page="./Delete" asp-route-id="@item.ID">Aktivera</a>
+                        }
+                        else
+                        {
+                            <a asp-page="./Delete" asp-route-id="@item.ID">Arkivera</a>
+                        }
                     </td>
                 </tr>
             </tbody>

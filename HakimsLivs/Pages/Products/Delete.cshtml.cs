@@ -61,11 +61,18 @@ namespace HakimsLivs.Pages.Products
                 return NotFound();
             }
 
-            Product = await _context.Products.FindAsync(id);
+            var productToArchive = await _context.Products.FindAsync(id);
 
             if (Product != null)
             {
-                _context.Products.Remove(Product);
+                if (productToArchive.Archived)
+                {
+                    productToArchive.Archived = false;
+                }
+                else
+                {
+                    productToArchive.Archived = true;
+                }
                 await _context.SaveChangesAsync();
             }
 

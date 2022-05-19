@@ -31,9 +31,8 @@
             </div>
             <div id="smallmenu">
                 <ul>
-                    <li><a href="/Orders">Orders</a></li>
-                    <li><a href="/Products">Products</a></li>
-                    <li><a href="/Checkout">Checkout</a></li>
+                    <li><a href="/Orders">Varukorg</a></li>
+                    <li><a href="/Products">Admin</a></li>
                 </ul>
             </div>
         </nav>
@@ -51,7 +50,7 @@
                 <div id="base">
                     @foreach (var item in Model.ProductList)
                     {
-                        @if(item.Inventory != 0)
+                        @if(item.Inventory != 0 && !item.Archived)
                         { 
                         <div id="productfoundation">
                             <div id="toppro">

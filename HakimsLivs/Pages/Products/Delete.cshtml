@@ -52,7 +52,14 @@
     
     <form method="post">
         <input type="hidden" asp-for="Product.ID" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        @if (Model.Product.Archived)
+        {
+        <input type="submit" value="Aktivera" class="btn btn-danger" />
+        }
+        else
+        {
+        <input type="submit" value="Arkivera" class="btn btn-danger" />
+        }
         <a asp-page="./Index">Back to List</a>
     </form>
 </div>

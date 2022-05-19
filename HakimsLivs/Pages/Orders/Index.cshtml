@@ -52,7 +52,7 @@
                     </td>
                     <td>
                         <form asp-page-handler="Remove" method="post">
-                            <button  onclick="javascript:Secure();" name="@product.ProductID" type="submit">Ta bort</button>
+                            <button onclick="javascript:Secure();" name="@product.ProductID" type="submit">Ta bort</button>
                         </form>
                     </td>
                 </tr>
@@ -79,15 +79,15 @@
     </div>
 }
 
-@section Scripts
-{
-<script>
+@*@section Scripts
+    {
+    <script>
     function Secure()
     {
-        var confirmation = window.confirm("Are you sure?"); //confirmation variable will contain true/false.
+    var confirmation = window.confirm("Are you sure?"); //confirmation variable will contain true/false.
 
-        if (confirmation) {  }
-        else { /* Write code for No */ }
+    if (confirmation) {  }
+    else { /* Write code for No */ }
     }
-</script>
-}
+    </script>
+    }*@

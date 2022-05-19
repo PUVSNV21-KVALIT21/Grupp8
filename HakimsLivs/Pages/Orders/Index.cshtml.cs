@@ -39,49 +39,58 @@ namespace HakimsLivs.Pages.Orders
             Order = await _context.Orders.Where(o => o.OrderCompleted == false).Where(o => o.User == user).FirstOrDefaultAsync();
 
             // Getting all the products linked to the order.
-            try { OrderProducts = await _context.OrderProducts.Where(o => o.OrderID == Order.ID).ToListAsync(); 
-
-            foreach (var product in OrderProducts)
+            try
             {
-                ProductsInOrder products = new ProductsInOrder();
+                OrderProducts = await _context.OrderProducts.Where(o => o.OrderID == Order.ID)
+                  .ToListAsync();
 
-                // Setting some variables used in displaying the cart to the user
-                int productID = product.ProductID;
-                Product = await _context.Products.Where(o => o.ID == productID).FirstOrDefaultAsync();
-                int amount = 1;
-
-                // Putting all the data needed into the cart list
-                products.ProductName = Product.Name;
-                products.ProductID = Product.ID;
-                products.Amount = amount;
-                products.PricePerItem = Product.Price;
-
-                // If the product is not already in the cart it will be added
-                if (!ProductsInOrderList.Any(item => item.ProductID == productID))
+                foreach (var product in OrderProducts)
                 {
-                    products.TotalItemPrice = products.Amount * products.PricePerItem;
-                    ProductsInOrderList.Add(products);
+                    ProductsInOrder products = new ProductsInOrder();
+
+                    // Setting some variables used in displaying the cart to the user
+                    int productID = product.ProductID;
+                    Product = await _context.Products.Where(o => o.ID == productID)
+                            .FirstOrDefaultAsync();
+                    int amount = 1;
+
+                    // Putting all the data needed into the cart list
+                    
+                    if (!Product.Archived)
+                    {
+                        products.ProductName = Product.Name;
+                        products.ProductID = Product.ID;
+                        products.Amount = amount;
+                        products.PricePerItem = Product.Price;
+                        products.Archived = Product.Archived;
+
+                        // If the product is not already in the cart it will be added
+                        if (!ProductsInOrderList.Any(item => item.ProductID == productID))
+                        {
+                            products.TotalItemPrice = products.Amount * products.PricePerItem;
+                            ProductsInOrderList.Add(products);
+                        }
+                        // If the product already exists the amount in the cart will be increased
+                        else
+                        {
+                            ProductsInOrder productToChange = ProductsInOrderList.Where(p => p.ProductID == productID).FirstOrDefault();
+                            ProductsInOrderList.Remove(productToChange);
+                            int amountToChange = productToChange.Amount;
+                            amountToChange++;
+                            productToChange.Amount = amountToChange;
+                            productToChange.TotalItemPrice = productToChange.Amount * productToChange.PricePerItem;
+
+                            ProductsInOrderList.Add(productToChange);
+                        }
+                    }
                 }
-                // If the product already exists the amount in the cart will be increased
-                else
+                ProductsInOrderList = ProductsInOrderList.OrderBy(p => p.ProductName).ToList();
+
+                // Genereating the total price for the entire cart
+                foreach (ProductsInOrder p in ProductsInOrderList)
                 {
-                    ProductsInOrder productToChange = ProductsInOrderList.Where(p => p.ProductID == productID).FirstOrDefault();
-                    ProductsInOrderList.Remove(productToChange);
-                    int amountToChange = productToChange.Amount;
-                    amountToChange++;
-                    productToChange.Amount = amountToChange;
-                    productToChange.TotalItemPrice = productToChange.Amount * productToChange.PricePerItem;
-
-                    ProductsInOrderList.Add(productToChange);
+                    TotalPrice += p.PricePerItem * p.Amount;
                 }
-            }
-            ProductsInOrderList = ProductsInOrderList.OrderBy(p => p.ProductName).ToList();
-
-            // Genereating the total price for the entire cart
-            foreach (ProductsInOrder p in ProductsInOrderList)
-            {
-                TotalPrice += p.PricePerItem * p.Amount;
-            }
             }
             catch { }
             return Page();
@@ -139,7 +148,7 @@ namespace HakimsLivs.Pages.Orders
                 var orderProductdecrease = _context.OrderProducts.Where(op => op.ProductID == selectedProductID).Where(op => op.OrderID == Order.ID).FirstOrDefault();
                 _context.OrderProducts.Remove(orderProductdecrease);
                 _context.SaveChanges();
-            }         
+            }
 
             return Redirect("./Orders");
         }
@@ -153,5 +162,6 @@ namespace HakimsLivs.Pages.Orders
         public int Amount { get; set; }
         public decimal PricePerItem { get; set; }
         public decimal TotalItemPrice { get; set; }
+        public bool Archived { get; set; }
     }
 }
