@@ -94,7 +94,7 @@
         </form>
         <footer id="bottom">
             @*<form asp-page-handler="Complete" method="post">*@
-                <button @*name="@Model.Order.ID"*@ >Ladda ned beställningsbekräftelse</button>
+                <button @*name="@Model.Order.ID"*@ onclick="javascript:receipt()">Ladda ned beställningsbekräftelse</button>
             @*</form>*@
         </footer>
     </body>
@@ -104,7 +104,7 @@
 {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
     <script>
-        function demoFromHTML() {
+        function receipt() {
             var pdf = new jsPDF('p', 'pt', 'letter');
             // source can be HTML-formatted string, or a reference
             // to an actual DOM element from which the text will be scraped.
