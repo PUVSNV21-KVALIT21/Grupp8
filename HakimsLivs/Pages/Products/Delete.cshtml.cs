@@ -65,7 +65,14 @@ namespace HakimsLivs.Pages.Products
 
             if (Product != null)
             {
-                productToArchive.Archived = true;
+                if (productToArchive.Archived)
+                {
+                    productToArchive.Archived = false;
+                }
+                else
+                {
+                    productToArchive.Archived = true;
+                }
                 await _context.SaveChangesAsync();
             }
 
