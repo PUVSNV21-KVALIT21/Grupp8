@@ -5,10 +5,12 @@
     ViewData["Title"] = "Details";
 }
 <link rel="stylesheet" href="~/css/ProductPage.css">
+<script src="/js/main.js"></script>
 
 <h1>Beställningar</h1>
-    <hr />
-    <div class=flexboxTable>
+<hr />
+<form>
+    <div class="flexboxTable" id="orders">
         @foreach (var oup in Model.orderUserProductList.OrderBy(date => date.Order.OrderDate))
         {
             <table class="tableOrder">
@@ -28,6 +30,11 @@
                             <b>Orderdatum:</b> @Html.DisplayFor(model => oup.Order.OrderDate)
                         </td>
                     </tr>
+                    <tr>
+                        <td>
+                            <button id="@oup.Order.ID" onclick="javascript:btnClick();">@oup.Order.ID</button>
+                        </td>
+                    </tr>
                     @foreach (var product in oup.ProductList)
                     {
                         <tr>
@@ -45,6 +52,19 @@
             </table>
         }
     </div>
+</form>
 <div>
     <a asp-page="./Index">Back to List</a>
 </div>
+
+
+@section Scripts
+{
+    <script>
+        function btnClick() {
+            document.getElementById("#14") = buton;
+            alert(buton + "");
+        }
+
+    </script>
+}
