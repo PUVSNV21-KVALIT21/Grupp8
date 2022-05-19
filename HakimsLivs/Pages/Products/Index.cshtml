@@ -92,7 +92,14 @@
                     <td>
                         <a asp-page="./Edit" asp-route-id="@item.ID">Editera</a> |
                         <a asp-page="./Details" asp-route-id="@item.ID">Detaljer</a> |
-                        <a asp-page="./Delete" asp-route-id="@item.ID">Arkivera</a>
+                        @if (item.Archived)
+                        {
+                            <a asp-page="./Delete" asp-route-id="@item.ID">Aktivera</a>
+                        }
+                        else
+                        {
+                            <a asp-page="./Delete" asp-route-id="@item.ID">Arkivera</a>
+                        }
                     </td>
                 </tr>
             </tbody>
