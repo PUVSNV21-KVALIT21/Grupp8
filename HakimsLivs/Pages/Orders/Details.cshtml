@@ -61,12 +61,12 @@
                 @foreach (var product in oup.ProductList)
                 {
                     <p><b><u>@Html.DisplayFor(model => product.Product.Name)</u></b></p>
-                    <p> @Html.DisplayFor(model => product.Product.Price) * @Html.DisplayFor(model => product.Amount) = @Html.DisplayFor(model => product.TotalPrice)</p>
+                    <p> @Html.DisplayFor(model => product.Product.Price) * @Html.DisplayFor(model => product.Amount) = @Html.DisplayFor(model => product.TotalPrice) kr</p>
                 }
-
+                <p><b>Total pris:</b> @Html.DisplayFor(model => oup.orderPrice) kr</p>
                 <p style="display:none"> . . . </p>
                 <p style="display:none">Swishnummer: 123 4567890</p>
-                <p style="display:none">Utlämningsställe</p>
+                <p style="display:none">Utlämningsadress: Hakimgatan 10</p>
             </div>
             </div>
         }

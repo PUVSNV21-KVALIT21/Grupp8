@@ -58,6 +58,10 @@ namespace HakimsLivs.Pages.Orders
                 OrderUserProduct orderUserProduct = new OrderUserProduct();
                 orderUserProduct.Order = order;
                 orderUserProduct.Username = username;
+                foreach (var product in productAmountList)
+                {
+                    orderUserProduct.orderPrice += product.TotalPrice;
+                }
                 orderUserProduct.ProductList = productAmountList;
                 orderUserProductList.Add(orderUserProduct);
 
@@ -70,14 +74,14 @@ namespace HakimsLivs.Pages.Orders
     {
         public Product Product { get; set; }
         public int Amount { get; set; }
-        public decimal TotalPrice { get; set; }
-
+        public decimal TotalPrice { get; set; } 
     }
 
     public class OrderUserProduct
     {
         public Order Order { get; set; }
         public string Username { get; set; }
+        public decimal orderPrice { get; set; }
         public List<ProductAmount> ProductList { get; set; } = new List<ProductAmount>();
     }
 }
