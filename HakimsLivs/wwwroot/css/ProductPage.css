@@ -42,6 +42,11 @@ a {
     color: blue;
 }
 
+#orderlist {
+    margin: 10px;
+    border: 2px solid grey;
+}
+
 .flexboxTable {
     display: flex;
     flex-wrap: wrap;

@@ -56,7 +56,7 @@
                 <p><b>Användare:</b> @Html.DisplayFor(model => oup.Username)</p>
                 <p><b>Ordernummer:</b> @Html.DisplayFor(model => oup.Order.ID)</p>
                 <p><b>Orderdatum:</b> @Html.DisplayFor(model => oup.Order.OrderDate)</p>
-                <p><button id="@oup.Order.ID">@oup.Order.ID</button></p>
+                <p><button id="@oup.Order.ID">PDF order</button></p>
 
                 @foreach (var product in oup.ProductList)
                 {
