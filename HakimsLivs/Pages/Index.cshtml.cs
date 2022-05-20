@@ -37,7 +37,7 @@ namespace HakimsLivs.Pages
 
         public void OnGet()
         {
-            if(HttpContext.User.Identity.Name == "admin@hakimslivs.se")
+            if(HttpContext.User.Identity.Name == "admin@hakimlivs.se")
             {
                 admin = true;
             }
@@ -131,7 +131,7 @@ namespace HakimsLivs.Pages
 
         public void OnPost()
         {
-            if (HttpContext.User.Identity.Name == "admin@hakimslivs.se")
+            if (HttpContext.User.Identity.Name == "admin@hakimlivs.se")
             {
                 admin = true;
             }
@@ -172,7 +172,7 @@ namespace HakimsLivs.Pages
         
         public async Task<IActionResult> OnPostViewAsync()
         {
-            if (HttpContext.User.Identity.Name == "admin@hakimslivs.se")
+            if (HttpContext.User.Identity.Name == "admin@hakimlivs.se")
             {
                 admin = true;
             }

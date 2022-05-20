@@ -28,7 +28,7 @@ namespace HakimsLivs.Pages.Orders
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var admin = _context.Users.Where(user => user.UserName == "admin@hakimslivs.se").FirstOrDefault();
+            var admin = _context.Users.Where(user => user.UserName == "admin@hakimlivs.se").FirstOrDefault();
             var currentUser = HttpContext.User.Identity.Name;
             if (admin.UserName != currentUser)
             {
