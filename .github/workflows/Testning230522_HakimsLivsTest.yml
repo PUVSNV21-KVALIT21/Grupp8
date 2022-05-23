@@ -6,7 +6,7 @@ name: Build and deploy ASP.Net Core app to Azure Web App - HakimsLivsTest
 on:
   push:
     branches:
-      - test
+      - Testning230522
   workflow_dispatch:
 
 jobs:
@@ -38,7 +38,7 @@ jobs:
     runs-on: windows-latest
     needs: build
     environment:
-      name: 'Production'
+      name: 'production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
@@ -52,6 +52,6 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: 'HakimsLivsTest'
-          slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_2BE5939AC0C7483FA8A9B9CBEF55BF81 }}
+          slot-name: 'production'
+          publish-profile: ${{ secrets.AzureAppService_PublishProfile_84a43fe2901342b5bd0310cb07ef1ea8 }}
           package: .
