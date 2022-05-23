@@ -37,7 +37,7 @@ namespace HakimsLivs.Pages
 
         public void OnGet()
         {
-            if(HttpContext.User.Identity.Name == "admin@hakimslivs.se")
+            if(HttpContext.User.Identity.Name == "admin@hakimlivs.se")
             {
                 admin = true;
             }
@@ -103,7 +103,9 @@ namespace HakimsLivs.Pages
             }
             #endregion
 
-            var Categories = database.Products.Where(p => p.Inventory > 0).Select(p => p.Category).AsEnumerable().GroupBy(c => c.Name).ToList();
+            var Categories = database.Products.Where(p => p.Inventory > 0)
+                .Where(p => p.Archived == false)
+                .Select(p => p.Category).AsEnumerable().GroupBy(c => c.Name).ToList();
             categoriesInProduct = Categories.Select(c => c.Key).ToList();
             if (categoryIsSelected == false) {
                 ProductList = database.Products.ToList();
@@ -111,14 +113,29 @@ namespace HakimsLivs.Pages
 
             if (HttpContext.User.Identity.Name != null)
             {
-                var currentOrder = database.Orders.Where(o => o.User.UserName == HttpContext.User.Identity.Name).Where(o => o.OrderCompleted == false).FirstOrDefault();
-                try { ItemsInOrder = database.OrderProducts.Where(op => op.OrderID == currentOrder.ID).Count(); }
+                try 
+                {
+                    var currentOrder = database.Orders.Where(o => o.User.UserName == HttpContext.User.Identity.Name).Where(o => o.OrderCompleted == false).FirstOrDefault();
+                    List<Product> productlist = new List<Product>();
+                    var opList = database.OrderProducts.Where(op => op.OrderID == currentOrder.ID).Select(op => op.ProductID).ToList();
+                    foreach( var op in opList)
+                    {
+                        var p = database.Products.Where(p => p.Archived == false).Where(p => p.ID == op).FirstOrDefault();
+                        productlist.Add(p);
+                    }
+                    ItemsInOrder = productlist.Where(entry => entry != null).Count();
+                }
                 catch { }
             }
         }
 
         public void OnPost()
         {
+            if (HttpContext.User.Identity.Name == "admin@hakimlivs.se")
+            {
+                admin = true;
+            }
+
             var Categories = database.Products.Where(p => p.Inventory > 0).Select(p => p.Category).AsEnumerable().GroupBy(c => c.Name).ToList();
             categoriesInProduct = Categories.Select(c => c.Key).ToList();
 
@@ -138,7 +155,14 @@ namespace HakimsLivs.Pages
                 try
                 {
                     var currentOrder = database.Orders.Where(o => o.User.UserName == HttpContext.User.Identity.Name).Where(o => o.OrderCompleted == false).FirstOrDefault();
-                    ItemsInOrder = database.OrderProducts.Where(op => op.OrderID == currentOrder.ID).Count();
+                    var opList = database.OrderProducts.Where(op => op.OrderID == currentOrder.ID).Select(op => op.ProductID).ToList();
+                    List<Product> productlist = new List<Product>();
+                    foreach (var op in opList)
+                    {
+                        var p = database.Products.Where(p => p.Archived == false).Where(p => p.ID == op).FirstOrDefault();
+                        productlist.Add(p);
+                    }
+                    ItemsInOrder = productlist.Count();
                 }
                 catch { }
             }
@@ -148,6 +172,11 @@ namespace HakimsLivs.Pages
         
         public async Task<IActionResult> OnPostViewAsync()
         {
+            if (HttpContext.User.Identity.Name == "admin@hakimlivs.se")
+            {
+                admin = true;
+            }
+
             #region //categoriesInProduct & ProductList needs to be defined when page reloads
             var Categories = database.Products.Where(p => p.Inventory > 0).Select(p => p.Category).AsEnumerable().GroupBy(c => c.Name).ToList();
             categoriesInProduct = Categories.Select(c => c.Key).ToList();
@@ -158,7 +187,7 @@ namespace HakimsLivs.Pages
             var username = HttpContext.User.Identity.Name;
 
             //If the username is null, the user is redirected to the login page
-            if(username == null){ return Redirect("./Identity/Account/Login?ReturnUrl=%2FProducts"); }
+            if(username == null){ return Redirect("./Identity/Account/Login?ReturnUrl=%2FIndex"); }
 
             //Otherwise, the user if found in the database
             var user = database.Users.Where(u => u.UserName == username).FirstOrDefault();
@@ -196,7 +225,7 @@ namespace HakimsLivs.Pages
 
                 ItemsInOrder = database.OrderProducts.Where(op => op.OrderID == currentOrder.ID).Count();
             }
-            return Redirect("./Index");
+            return Page();
         }
     }
 }

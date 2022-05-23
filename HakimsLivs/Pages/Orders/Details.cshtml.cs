@@ -28,14 +28,14 @@ namespace HakimsLivs.Pages.Orders
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var admin = _context.Users.Where(user => user.UserName == "admin@hakimslivs.se").FirstOrDefault();
+            var admin = _context.Users.Where(user => user.UserName == "admin@hakimlivs.se").FirstOrDefault();
             var currentUser = HttpContext.User.Identity.Name;
             if (admin.UserName != currentUser)
             {
                 return Redirect("./Identity/Account/AccessDenied?");
             }
 
-            orderList = await _context.Orders.Include(u => u.User).Where(o => o.OrderCompleted == true).OrderBy(o => o.OrderDate).ToListAsync();
+            orderList = await _context.Orders.Include(u => u.User).Where(o => o.OrderCompleted == true).OrderByDescending(o => o.OrderDate).ToListAsync();
 
             foreach( var order in orderList)
             {
@@ -58,6 +58,10 @@ namespace HakimsLivs.Pages.Orders
                 OrderUserProduct orderUserProduct = new OrderUserProduct();
                 orderUserProduct.Order = order;
                 orderUserProduct.Username = username;
+                foreach (var product in productAmountList)
+                {
+                    orderUserProduct.orderPrice += product.TotalPrice;
+                }
                 orderUserProduct.ProductList = productAmountList;
                 orderUserProductList.Add(orderUserProduct);
 
@@ -70,14 +74,14 @@ namespace HakimsLivs.Pages.Orders
     {
         public Product Product { get; set; }
         public int Amount { get; set; }
-        public decimal TotalPrice { get; set; }
-
+        public decimal TotalPrice { get; set; } 
     }
 
     public class OrderUserProduct
     {
         public Order Order { get; set; }
         public string Username { get; set; }
+        public decimal orderPrice { get; set; }
         public List<ProductAmount> ProductList { get; set; } = new List<ProductAmount>();
     }
 }
