@@ -37,7 +37,7 @@ namespace HakimsLivs.Pages
 
         public void OnGet()
         {
-            if(HttpContext.User.Identity.Name == "admin@hakimslivs.se")
+            if(HttpContext.User.Identity.Name == "admin@hakimlivs.se")
             {
                 admin = true;
             }
@@ -103,7 +103,9 @@ namespace HakimsLivs.Pages
             }
             #endregion
 
-            var Categories = database.Products.Where(p => p.Inventory > 0).Select(p => p.Category).AsEnumerable().GroupBy(c => c.Name).ToList();
+            var Categories = database.Products.Where(p => p.Inventory > 0)
+                .Where(p => p.Archived == false)
+                .Select(p => p.Category).AsEnumerable().GroupBy(c => c.Name).ToList();
             categoriesInProduct = Categories.Select(c => c.Key).ToList();
             if (categoryIsSelected == false) {
                 ProductList = database.Products.ToList();
@@ -129,7 +131,7 @@ namespace HakimsLivs.Pages
 
         public void OnPost()
         {
-            if (HttpContext.User.Identity.Name == "admin@hakimslivs.se")
+            if (HttpContext.User.Identity.Name == "admin@hakimlivs.se")
             {
                 admin = true;
             }
@@ -170,7 +172,7 @@ namespace HakimsLivs.Pages
         
         public async Task<IActionResult> OnPostViewAsync()
         {
-            if (HttpContext.User.Identity.Name == "admin@hakimslivs.se")
+            if (HttpContext.User.Identity.Name == "admin@hakimlivs.se")
             {
                 admin = true;
             }

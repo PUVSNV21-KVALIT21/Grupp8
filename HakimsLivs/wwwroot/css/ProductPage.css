@@ -42,6 +42,19 @@ a {
     color: blue;
 }
 
+input {
+    border: 2px solid grey;
+}
+
+input:hover {
+    cursor: pointer;
+}
+
+#orderlist {
+    margin: 10px;
+    border: 2px solid grey;
+}
+
 .flexboxTable {
     display: flex;
     flex-wrap: wrap;

@@ -23,16 +23,19 @@
                 <p><b>Ordernummer:</b> @Html.DisplayFor(model => oup.Order.ID)</p>
                 <p><b>Orderdatum:</b> @Html.DisplayFor(model => oup.Order.OrderDate)</p>
                 <p><b>Användare:</b> @Html.DisplayFor(model => oup.Username)</p>
-                <p><button id="@oup.Order.ID">Ladda ned faktura</button></p>
+                <p><button id="@oup.Order.ID">PDF order</button></p>
+
 
                @foreach (var product in oup.ProductList)
                 {
                     <p><b><u>@Html.DisplayFor(model => product.Product.Name)</u></b></p>
-                    <p> @Html.DisplayFor(model => product.Product.Price) * @Html.DisplayFor(model => product.Amount) = @Html.DisplayFor(model => product.TotalPrice)</p>
+                    <p> @Html.DisplayFor(model => product.Product.Price) * @Html.DisplayFor(model => product.Amount) = @Html.DisplayFor(model => product.TotalPrice) kr</p>
                 }
 
-                <p></p>
-                
+                <p><b>Total pris:</b> @Html.DisplayFor(model => oup.orderPrice) kr</p>
+                <p style="display:none"> . . . </p>
+                <p style="display:none">Swishnummer: 123 4567890</p>
+                <p style="display:none">Utlämningsadress: Hakimgatan 10</p>
             </div>
         </div>
         }
@@ -96,7 +99,7 @@
                     pdf.save('Orderlista.pdf');
                 }, margins);
 
-            alert('Beställningsbekräftelse mottagit');
+            alert('Orderlista mottagit');
         }
     </script>
 }
