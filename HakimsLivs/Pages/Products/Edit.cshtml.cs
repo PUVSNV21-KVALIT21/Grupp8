@@ -9,9 +9,11 @@ using Microsoft.EntityFrameworkCore;
 using HakimsLivs.Data;
 using HakimsLivs.Models;
 using System.Net;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HakimsLivs.Pages.Products
 {
+    [Authorize]
     public class EditModel : PageModel
     {
         private readonly HakimsLivs.Data.ApplicationDbContext _context;
@@ -28,6 +30,13 @@ namespace HakimsLivs.Pages.Products
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
+            var admin = _context.Users.Where(user => user.UserName == "admin@hakimlivs.se").FirstOrDefault();
+            var username = HttpContext.User.Identity.Name;
+            if (admin.UserName != username)
+            {
+                return Redirect("./Identity/Account/AccessDenied?");
+            }
+
             categoryList = await _context.Categories.Select(c => c.Name).ToListAsync();
 
             if (id == null)
@@ -60,6 +69,12 @@ namespace HakimsLivs.Pages.Products
         // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync(int id)
         {
+            var admin = _context.Users.Where(user => user.UserName == "admin@hakimlivs.se").FirstOrDefault();
+            var username = HttpContext.User.Identity.Name;
+            if (admin.UserName != username)
+            {
+                return Redirect("./Identity/Account/AccessDenied?");
+            }
             // Ensures that the image URL given is valid, if not: the "Image not available" shows
             bool exists;
             try

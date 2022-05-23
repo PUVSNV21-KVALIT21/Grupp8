@@ -12,28 +12,25 @@ namespace HakimsLivs.Pages.Categories
 {
     public class DetailsModel : PageModel
     {
-        private readonly HakimsLivs.Data.ApplicationDbContext _context;
+        private ApplicationDbContext database;
 
-        public DetailsModel(HakimsLivs.Data.ApplicationDbContext context)
+        public DetailsModel(HakimsLivs.Data.ApplicationDbContext database)
         {
-            _context = context;
+            this.database = database;
         }
+        public List<Microsoft.AspNetCore.Identity.IdentityUser> Customer { get; set; }
 
-        public Category Category { get; set; }
-
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync()
         {
-            if (id == null)
+            var admin = database.Users.Where(user => user.UserName == "admin@hakimlivs.se").FirstOrDefault();
+            var username = HttpContext.User.Identity.Name;
+            if (admin.UserName != username)
             {
-                return NotFound();
+                return Redirect("./Identity/Account/AccessDenied?");
             }
 
-            Category = await _context.Categories.FirstOrDefaultAsync(m => m.ID == id);
+            Customer = await database.Users.ToListAsync();
 
-            if (Category == null)
-            {
-                return NotFound();
-            }
             return Page();
         }
     }

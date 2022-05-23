@@ -7,9 +7,25 @@
     <link rel="stylesheet" href="~/css/Foundation.css" />
 </head>
 <body>
-            @RenderBody()
+
+    <header id="LogInHeader">
+        <partial name="_LoginPartial" />
+        <a href="/Index"><b>Startsida</b></a>
+    </header>
+
+    <main>
+        @RenderBody()
+    </main>
+
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
+
+    <!--RenderBody()-->
+    <!--<script src="~/js/site.js" asp-append-version="true"></script>-->
+    <!--await RenderSectionAsync("Scripts", required: false)-->
 </body>
 </html>

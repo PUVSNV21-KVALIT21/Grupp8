@@ -1,0 +1,152 @@
+﻿@page
+@model HakimsLivs.Pages.Checkout.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hakims Livs</title>
+    <link rel="stylesheet" href="Foundation.css">
+</head>
+
+
+    <body>
+        <form>
+            <div id="middle">
+                @*<div id="base" style="display:block; background-color: darkseagreen">
+                    @foreach (var item in Model.ProductAmount)
+                    {
+                        <table>
+                            <tbody>
+                                <tr>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <b>@item.Key.Name</b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    @if (!(item.Key.Weight == null) && !(item.Key.Volume == null))
+                                    {
+                                        <td>
+                                            <b>Vikt:</b> @Html.DisplayFor(modelItem => item.Key.Weight) gram | <b>Volym</b> @Html.DisplayFor(modelItem => item.Key.Volume) ml
+                                        </td>
+                                    }
+                                    @if (item.Key.Volume == null)
+                                    {
+                                        <td>
+                                            <b>Vikt:</b> @Html.DisplayFor(modelItem => item.Key.Weight) gram
+                                        </td>
+                                    }
+                                    @if (item.Key.Weight == null)
+                                    {
+                                        <td>
+                                            <b>Volym:</b> @Html.DisplayFor(modelItem => item.Key.Volume) ml
+                                        </td>
+                                    }
+                                    <td>
+                                        <b>Pris: @item.Key.Price kr</b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <b>Mängd: @item.Value.ToString() st</b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                </tr>
+                            </tbody>
+                        </table>
+                    }
+                </div>*@
+                <div id="receipt" style="width: 500px">
+                    <h1>Beställningsbekräftelse</h1>
+                    <h3>Email : @Model.username</h3>
+                    <h3>Ordernummer : @Model.Order.ID</h3>
+                    <p> .  .  .</p>
+                    @foreach (var item in Model.ProductAmount)
+                    {
+                        <div style="padding-bottom: 5px">
+                            <p><u>@item.Key.Name</u></p>
+                            <p>Á pris: @((item.Key.Price).ToString()) kr</p>
+                            <p>Antal:@item.Value.ToString() </p>
+                            <p>Pris sammanlagt: @((item.Key.Price * item.Value).ToString()) kr</p>
+                            <p> .  .  .</p>
+                        </div>
+                    }
+                    <p><b>Summa Totalt: @Model.amountTotal.ToString() kr</b></p>
+                    <p> .  .  .</p>
+                    <p>Efter att du har gjort din order, avvakta leverans och betala senare.</p>
+                    <p><b>Swishnummer: 123 4567890</b></p>
+                    <p>Utlämningsadress: Hakimgatan 10</p>
+                    <p>För hemleverans, kontakta butiken genom e-post eller telefon.</p>
+                </div>
+            </div>
+
+            @*<nav id="top">
+                <a id="title" href="/Index">
+                    <img src="~/css/HakimsLivsLogo.jpg" height="80" , width="140" />
+                </a>
+            </nav>*@
+        </form>
+        <footer id="bottom">
+            @*<form asp-page-handler="Complete" method="post">*@
+                <button @*name="@Model.Order.ID"*@ onclick="javascript:receipt()">Ladda ned beställningsbekräftelse</button>
+            @*</form>*@
+        </footer>
+    </body>
+
+
+@section Scripts
+{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
+    <script>
+        function receipt() {
+            var pdf = new jsPDF('p', 'pt', 'letter');
+            // source can be HTML-formatted string, or a reference
+            // to an actual DOM element from which the text will be scraped.
+
+            source = $('#receipt')[0];
+
+            // we support special element handlers. Register them with jQuery-style
+            // ID selector for either ID or node name. ("#iAmID", "div", "span" etc.)
+            // There is no support for any other type of selectors
+            // (class, of compound) at this time.
+            specialElementHandlers = {
+                // element with id of "bypass" - jQuery style selector
+                '#bypassme': function (element, renderer) {
+                    // true = "handled elsewhere, bypass text extraction"
+                    return true
+                }
+            };
+            margins = {
+                top: 80,
+                bottom: 60,
+                left: 40,
+                width: 522
+            };
+            // all coords and widths are in jsPDF instance's declared units
+            // 'inches' in this case
+            pdf.fromHTML(
+                source, // HTML string or DOM elem ref.
+                margins.left, // x coord
+                margins.top, { // y coord
+                'width': margins.width, // max width of content on PDF
+                'elementHandlers': specialElementHandlers
+            },
+
+                function (dispose) {
+                    // dispose: object with X, Y of the last line add to the PDF
+                    //          this allow the insertion of new lines after html
+                    pdf.save('Beställningsbekräftelse.pdf');
+                }, margins);
+
+            alert('Beställningsbekräftelse mottagit');
+        }
+  
+    </script>
+}

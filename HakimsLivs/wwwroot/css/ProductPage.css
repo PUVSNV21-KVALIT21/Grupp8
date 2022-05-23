@@ -23,9 +23,15 @@
 
 table{padding: 3px;}
 
+.tableOrder {
+    padding: 3px;
+    min-height: 150px;
+    min-width: 400px;
+}
+
 img{align-content:center;}
 
-td, b, tr {
+td, b, tr, u {
     background-color: cornsilk;
     color: black;
     max-width: 200px;
@@ -36,9 +42,51 @@ a {
     color: blue;
 }
 
+input {
+    border: 2px solid grey;
+}
+
+input:hover {
+    cursor: pointer;
+}
+
+#orderlist {
+    margin: 10px;
+    border: 2px solid grey;
+}
+
 .flexboxTable {
     display: flex;
     flex-wrap: wrap;
+}
+
+.flexboxTableOrder {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.orderDiv {
+    margin-bottom: 25px;
+    margin-left: 0;
+    background-color: cornsilk;
+}
+
+p {
+    background-color: cornsilk;
+    width: 400px;
+}
+
+.flexboxTableCustomer {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column
+}
+
+.tdCustomer {
+    background-color: cornsilk;
+    color: black;
+    min-width: 400px;
 }
 
 .row {

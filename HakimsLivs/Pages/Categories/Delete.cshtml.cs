@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using HakimsLivs.Data;
 using HakimsLivs.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HakimsLivs.Pages.Categories
 {
+    [Authorize]
     public class DeleteModel : PageModel
     {
         private readonly HakimsLivs.Data.ApplicationDbContext _context;
@@ -24,6 +26,13 @@ namespace HakimsLivs.Pages.Categories
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
+            var admin = _context.Users.Where(user => user.UserName == "admin@hakimlivs.se").FirstOrDefault();
+            var username = HttpContext.User.Identity.Name;
+            if (admin.UserName != username)
+            {
+                return Redirect("./Identity/Account/AccessDenied?");
+            }
+
             if (id == null)
             {
                 return NotFound();
@@ -40,6 +49,13 @@ namespace HakimsLivs.Pages.Categories
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
+            var admin = _context.Users.Where(user => user.UserName == "admin@hakimlivs.se").FirstOrDefault();
+            var username = HttpContext.User.Identity.Name;
+            if (admin.UserName != username)
+            {
+                return Redirect("./Identity/Account/AccessDenied?");
+            }
+
             if (id == null)
             {
                 return NotFound();

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace HakimsLivs.Pages
 {
-    public class CheckoutModel : PageModel
+    public class Index1Model : PageModel
     {
         public void OnGet()
         {

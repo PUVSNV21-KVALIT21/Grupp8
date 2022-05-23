@@ -8,9 +8,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using HakimsLivs.Data;
 using HakimsLivs.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HakimsLivs.Pages.Categories
 {
+    [Authorize]
     public class CreateModel : PageModel
     {
         private readonly HakimsLivs.Data.ApplicationDbContext _context;
@@ -24,6 +26,13 @@ namespace HakimsLivs.Pages.Categories
 
         public IActionResult OnGet()
         {
+            var admin = _context.Users.Where(user => user.UserName == "admin@hakimlivs.se").FirstOrDefault();
+            var username = HttpContext.User.Identity.Name;
+            if (admin.UserName != username)
+            {
+                return Redirect("./Identity/Account/AccessDenied?");
+            }
+
             return Page();
         }
 
@@ -33,6 +42,13 @@ namespace HakimsLivs.Pages.Categories
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
+            var admin = _context.Users.Where(user => user.UserName == "admin@hakimlivs.se").FirstOrDefault();
+            var username = HttpContext.User.Identity.Name;
+            if (admin.UserName != username)
+            {
+                return Redirect("./Identity/Account/AccessDenied?");
+            }
+
             List<string> categoryList = database.Categories.Select(c => c.Name).ToList();
             if (!ModelState.IsValid || categoryList.Contains(Category.Name))
             {

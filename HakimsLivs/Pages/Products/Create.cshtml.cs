@@ -26,9 +26,17 @@ namespace HakimsLivs.Pages.Products
             this.database = database;
         }
 
-        public async Task OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
+            var admin = _context.Users.Where(user => user.UserName == "admin@hakimlivs.se").FirstOrDefault();
+            var username = HttpContext.User.Identity.Name;
+            if (admin.UserName != username)
+            {
+                return Redirect("./Identity/Account/AccessDenied?");
+            }
+
             categoryList = await database.Categories.Select(c => c.Name).ToListAsync();
+            return Page();
         }
 
         [BindProperty]
@@ -37,6 +45,13 @@ namespace HakimsLivs.Pages.Products
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
+            var admin = _context.Users.Where(user => user.UserName == "admin@hakimlivs.se").FirstOrDefault();
+            var username = HttpContext.User.Identity.Name;
+            if (admin.UserName != username)
+            {
+                return Redirect("./Identity/Account/AccessDenied?");
+            }
+
             // Ensures that the image URL given is valid, if not: the "Image not available" shows
             bool exists;
             try

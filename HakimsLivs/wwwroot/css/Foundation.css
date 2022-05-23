@@ -1,15 +1,23 @@
 ﻿* {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     line-height: 1.4em;
-    background-color: #282828;
-    color: rgba(245, 11, 11, 0.979);
+    background-color: darkseagreen;
     margin: auto;
     border: none;
+}
+
+main {
+    flex-direction: row;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 95%;
 }
 
 form {
     width: 100%;
     display: flex;
+    /*margin-bottom: 70px;*/
+    flex-direction: column;
 }
 
 body {
@@ -22,34 +30,61 @@ body {
 /*banner*/
 #top {
     display: flex;
-    flex-direction: row;
-    position: fixed;
+    /* flex-direction: row; */
+    position: absolute;
     width: 100%;
     left: 50%;
-    top: 20px;
+    /* top: 100px; */
     transform: translate(-50%, -50%);
     gap: 50px;
-    padding: 10px;
-    margin: 10px;
-    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%), 0 25px 50px 0 rgb(0 0 0 / 10%)
+    padding-left: 15px;
+    /* padding-right: 35px; */
+    /* padding-top: 30px; */
+    margin-bottom: 10px;
+    margin-top: 50px;
+    /* margin-left: auto; */
+    /* margin-right: auto; */
+    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%), 0 25px 50px 0 rgb(0 0 0 / 10%);
+    justify-content: space-evenly;
 }
+
+#LogInHeader {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
 
 button {
     border: 2px solid grey;
-    background-color: #282828;
+    background-color: white;
     padding: 8px 18px;
     font-size: 16px;
     cursor: pointer;
 }
 
     button:hover {
-        background-color: rgba(245, 11, 11, 0.979);
-        color: white;
+        background-color: tomato;
     }
+
+.menuButton {
+    background-color: #199319;
+    color: white;
+    padding: 15px 25px;
+    text-decoration: none;
+}
+.menuButton:hover {
+    color: white;
+    background-color: black;
+}
 
 #start {
     border: 2px solid grey;
-    width: 300px;
+    width: 500px;
+    height: 40px;
+}
+
+#smallmenu {
+    display: none;
 }
 
 #title {
@@ -60,18 +95,22 @@ button {
     padding: 4px;
 }
 
+
 /*body*/
 #middle {
     display: flex;
     margin-top: 70px;
     width: 100%;
     position: relative;
-    top: 70px;
+    top: 110px;
     margin: 0;
+    border-right: 2px solid grey;
+    border-left: 2px solid grey;
+    border-bottom: 2px solid grey;
 }
 
 #sticky {
-    background-color: #282828;
+    background-color: darkseagreen;
     display: block;
     flex-direction: column;
     width: 290px;
@@ -79,20 +118,35 @@ button {
     top: 0px;
     position: -webkit-sticky;
     position: sticky;
-    margin-top: 0px;
+    margin-top: 25px;
+}
+
+#sticky2 {
+    background-color: darkseagreen;
+    display: block;
+    flex-direction: column;
+    width: 290px;
+    top: 0px;
+    position: -webkit-sticky;
+    position: sticky;
+    margin-top: 25px;
 }
 
 #categorybutton {
-    width: 100%;
+    width: 100%; 
+    overflow: hidden;   
 }
 
 #base {
-    background-color: turquoise;
+    background-color: white;
     display: flex;
     flex-direction: row;
     top: 0px;
     width: 100%;
-    height: 1300px;
+    height: 100%;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    margin-top: 25px;
 }
 
 #productfoundation {
@@ -102,10 +156,7 @@ button {
     padding: 10px;
     margin: 10px;
     box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%), 0 25px 50px 0 rgb(0 0 0 / 10%);
-}
-
-#top {
-    font-size: 44px;
+    height: 300px;
 }
 
 #quantity {
@@ -121,19 +172,54 @@ button {
     border-radius: 50%;
 }
 
+.buttonche {
+    border: 2px solid rgba(245, 11, 11, 0.979);
+    padding: 2px 25px;
+    font-size: inherit;
+    cursor: pointer;
+    border-radius: 30%;
+}
+
+td {
+    padding-bottom: 3px;
+}
+
 /*footer*/
 #bottom {
     background-color: tomato;
     position: relative;
-    bottom: 0px;
     height: 100px;
     width: 100%;
     display: flex;
     align-items: center;
+    margin-top: 130px;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    padding-bottom: 10px;
 }
 
-@media (max-width: 1000px) {
-    #checkout {
-        margin-right: 15px;
+.footerTable {
+    background-color: tomato;
+}
+
+@media (max-width: 780px) {
+    #menu {
+        display: none;
+    }
+
+    #smallmenu {
+        display: flex;
+        list-style: none;
+        padding-right: 15px;
+    }
+}
+
+@media (max-width: 630px) {
+    #top {
+        gap: 0;
+    }
+    
+    #middle {
+        border: none;
     }
 }

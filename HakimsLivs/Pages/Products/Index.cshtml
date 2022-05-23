@@ -6,22 +6,18 @@
 }
 <link rel="stylesheet" href="~/css/ProductPage.css">
 
-<div id="top">
+<nav id="top">
     <a id="title" href="/Index">
         <img src="~/css/HakimsLivsLogo.jpg" height="80" , width="140" />
     </a>
-    <input type="text" id="start" placeholder="Search" autofocus>
-    <button type="submit" asp-page="/Login">Login</button>
-    <button type="submit" asp-page="/Checkout">Checkout</button>
-    <a class="button" href="/Products">Products</a>
+
+    @*<input type="text" id="start" placeholder="Search" autofocus>*@
+    <a class="button" href="/Index">Startsida</a>
+    <a class="button" href="/Products">Produkter</a>
     <a class="button" href="/Categories">Kategorier</a>
-</div>
-
-<p> . </p>
-<p> . </p>
-<p> . </p>
-<p> . </p>
-
+    <a class="button" href="/Categories/Details">Kunder</a>
+    <a class="button" href="/Orders/Details">Ordrar</a>
+</nav>
 
 <h1>
     Produkter
@@ -35,14 +31,13 @@
 <div class=flexboxTable>
     @foreach (var item in Model.Product)
     {
-
         <table>
             <tbody>
                 <tr>
                     <td>
                         <img src=@Html.DisplayFor(modelItem => item.Image)
-                             width="200" ,
-                             height="133" />
+                         width="200" ,
+                         height="133" />
                     </td>
                 </tr>
                 <tr>
@@ -82,9 +77,29 @@
                 </tr>
                 <tr>
                     <td>
+                        @if (item.Archived)
+                        {
+                            <b style="color: red">Arkiverad</b>
+                        }
+                        else
+                        {
+                            <b>Aktiv</b>
+                        }
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
                         <a asp-page="./Edit" asp-route-id="@item.ID">Editera</a> |
                         <a asp-page="./Details" asp-route-id="@item.ID">Detaljer</a> |
-                        <a asp-page="./Delete" asp-route-id="@item.ID">Radera</a>
+                        @if (item.Archived)
+                        {
+                            <a asp-page="./Delete" asp-route-id="@item.ID">Aktivera</a>
+                        }
+                        else
+                        {
+                            <a asp-page="./Delete" asp-route-id="@item.ID">Arkivera</a>
+                        }
                     </td>
                 </tr>
             </tbody>
