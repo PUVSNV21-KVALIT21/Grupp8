@@ -35,7 +35,7 @@ namespace HakimsLivs.Pages.Orders
                 return Redirect("./Identity/Account/AccessDenied?");
             }
 
-            orderList = await _context.Orders.Include(u => u.User).Where(o => o.OrderCompleted == true).OrderBy(o => o.OrderDate).ToListAsync();
+            orderList = await _context.Orders.Include(u => u.User).Where(o => o.OrderCompleted == true).OrderByDescending(o => o.OrderDate).ToListAsync();
 
             foreach( var order in orderList)
             {

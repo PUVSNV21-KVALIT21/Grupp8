@@ -47,6 +47,23 @@ a {
     flex-wrap: wrap;
 }
 
+.flexboxTableOrder {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.orderDiv {
+    margin-bottom: 25px;
+    margin-left: 0;
+    background-color: cornsilk;
+}
+
+p {
+    background-color: cornsilk;
+    width: 400px;
+}
+
 .flexboxTableCustomer {
     display: flex;
     flex-wrap: wrap;
