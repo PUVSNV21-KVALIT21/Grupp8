@@ -7,74 +7,40 @@
 <link rel="stylesheet" href="~/css/ProductPage.css">
 <script src="/js/main.js"></script>
 
+<a href="/Products"> << Tillbaka</a>
+
 <h1>Beställningar</h1>
+
 <hr />
 <form>
-    <div class="flexboxTable" id="orders">
-        @foreach (var oup in Model.orderUserProductList.OrderBy(date => date.Order.OrderDate))
+    <div class="flexboxTableOrder" id="orders">
+       @foreach (var oup in Model.orderUserProductList.OrderByDescending(date => date.Order.OrderDate))
         {
-            @*<table class="tableOrder" id="container @oup.Order.ID">
-                <tbody>
-                    <tr>
-                        <td>
-                            <b>Användare:</b> @Html.DisplayFor(model => oup.Username)
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <b>Ordernummer:</b> @Html.DisplayFor(model => oup.Order.ID)
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <b>Orderdatum:</b> @Html.DisplayFor(model => oup.Order.OrderDate)
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <button id="@oup.Order.ID" onclick="javascript:printout();">@oup.Order.ID</button>
-                        </td>
-                    </tr>
-                    @foreach (var product in oup.ProductList)
-                    {
-                        <tr>
-                            <td>
-                                <b><u>@Html.DisplayFor(model => product.Product.Name)</u></b>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(model => product.Product.Price) * @Html.DisplayFor(model => product.Amount) = @Html.DisplayFor(model => product.TotalPrice)
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>*@
 
-        <div id="container @oup.Order.ID">
+
+        <div class="orderDiv" id="container @oup.Order.ID">
             <div id="orderlist">
-                <p><b>Användare:</b> @Html.DisplayFor(model => oup.Username)</p>
                 <p><b>Ordernummer:</b> @Html.DisplayFor(model => oup.Order.ID)</p>
                 <p><b>Orderdatum:</b> @Html.DisplayFor(model => oup.Order.OrderDate)</p>
+                <p><b>Användare:</b> @Html.DisplayFor(model => oup.Username)</p>
                 <p><button id="@oup.Order.ID">PDF order</button></p>
 
-                @foreach (var product in oup.ProductList)
+
+               @foreach (var product in oup.ProductList)
                 {
                     <p><b><u>@Html.DisplayFor(model => product.Product.Name)</u></b></p>
                     <p> @Html.DisplayFor(model => product.Product.Price) * @Html.DisplayFor(model => product.Amount) = @Html.DisplayFor(model => product.TotalPrice) kr</p>
                 }
+
                 <p><b>Total pris:</b> @Html.DisplayFor(model => oup.orderPrice) kr</p>
                 <p style="display:none"> . . . </p>
                 <p style="display:none">Swishnummer: 123 4567890</p>
                 <p style="display:none">Utlämningsadress: Hakimgatan 10</p>
             </div>
-            </div>
+        </div>
         }
     </div>
 </form>
-<div>
-    <a asp-page="./Index">Back to List</a>
-</div>
 
 
 @section Scripts
