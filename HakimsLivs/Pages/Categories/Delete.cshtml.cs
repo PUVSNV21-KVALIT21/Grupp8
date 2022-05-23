@@ -26,7 +26,7 @@ namespace HakimsLivs.Pages.Categories
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            var admin = _context.Users.Where(user => user.UserName == "admin@hakimslivs.se").FirstOrDefault();
+            var admin = _context.Users.Where(user => user.UserName == "admin@hakimlivs.se").FirstOrDefault();
             var username = HttpContext.User.Identity.Name;
             if (admin.UserName != username)
             {
@@ -49,7 +49,7 @@ namespace HakimsLivs.Pages.Categories
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            var admin = _context.Users.Where(user => user.UserName == "admin@hakimslivs.se").FirstOrDefault();
+            var admin = _context.Users.Where(user => user.UserName == "admin@hakimlivs.se").FirstOrDefault();
             var username = HttpContext.User.Identity.Name;
             if (admin.UserName != username)
             {

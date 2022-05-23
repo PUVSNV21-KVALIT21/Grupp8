@@ -28,7 +28,7 @@ namespace HakimsLivs.Pages.Products
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var admin = _context.Users.Where(user => user.UserName == "admin@hakimslivs.se").FirstOrDefault();
+            var admin = _context.Users.Where(user => user.UserName == "admin@hakimlivs.se").FirstOrDefault();
             var username = HttpContext.User.Identity.Name;
             if (admin.UserName != username)
             {
@@ -45,7 +45,7 @@ namespace HakimsLivs.Pages.Products
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-            var admin = _context.Users.Where(user => user.UserName == "admin@hakimslivs.se").FirstOrDefault();
+            var admin = _context.Users.Where(user => user.UserName == "admin@hakimlivs.se").FirstOrDefault();
             var username = HttpContext.User.Identity.Name;
             if (admin.UserName != username)
             {
